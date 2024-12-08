@@ -5,6 +5,8 @@ import AuthForm from "../../components/AuthForm"; // Componenta ta pentru formul
 import { auth } from "../firebase/config"; // Configurarea Firebase
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 
+import "/styles/auth.css"; // Stilurile pentru paginile de autentificare
+
 const AuthPage = () => {
   const [isSignUp, setIsSignUp] = useState(false); // Controlează ce formular să afișeze
   const [email, setEmail] = useState(""); // Stochează email-ul
