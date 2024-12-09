@@ -7,7 +7,6 @@ import useLayers from "../../hooks/useLayers";
 
 // Importă stiluri specifice
 import "../../styles/map.css"; // Stiluri pentru hartă
-// import "../../styles/layer-selector.css"; // Stiluri pentru selector de layere
 
 const HomePage = () => {
   const { selectedLayer, setSelectedLayer, layers } = useLayers();

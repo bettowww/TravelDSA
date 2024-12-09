@@ -15,3 +15,39 @@ export const muzeumsRenderer = {
     size: "8px",
   },
 };
+
+export const atractiiNaturaleRenderer = {
+  type: "simple",
+  symbol: {
+    type: "simple-marker",
+    color: "green",
+    size: "8px",
+  },
+};
+
+export const shoppingRenderer = {
+  type: "simple",
+  symbol: {
+    type: "simple-marker",
+    color: "yellow",
+    size: "8px",
+  },
+};
+
+export const cladiriRenderer = {
+  type: "simple",
+  symbol: {
+    type: "simple-marker",
+    color: "purple",
+    size: "8px",
+  },
+};
+
+export const manastiriRenderer = {
+  type: "simple",
+  symbol: {
+    type: "simple-marker",
+    color: "orange",
+    size: "8px",
+  },
+};
