@@ -1,0 +1,120 @@
+.map-container {
+    width: 100%;
+    height: calc(100vh - 160px);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin-top: 20px;
+}
+
+.layer-selector {
+    width: 100%;
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 10px;
+    background-color: var(--color-gunmetal);
+    border-radius: 8px;
+    text-align: center;
+}
+
+.layer-selector select {
+    width: 100%;
+    max-width: 300px;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid var(--color-border);
+    font-size: 1rem;
+    background-color: var(--color-jet);
+    color: white;
+}
+/* Containerul principal al paginii */
+.home-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  min-height: 100vh;
+}
+
+/* Titlul paginii */
+.home-title {
+  margin-bottom: 20px;
+  color: #333;
+  font-size: 24px;
+  text-align: center;
+}
+
+/* Containerul pentru meniul din dreapta sus */
+.menu-container {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+/* Butonul de meniu */
+.menu-button {
+  padding: 10px;
+  background-color: #50d8d7;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 18px;
+  color: #fff;
+}
+
+.menu-button:hover {
+  background-color: #3bbab9;
+}
+
+/* Dropdown-ul meniului */
+.menu-dropdown {
+  position: absolute;
+  top: 50px;
+  right: 0;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+/* Lista din meniul dropdown */
+.menu-dropdown ul {
+  list-style: none;
+  margin: 0;
+  padding: 10px;
+  text-align: right;
+}
+
+/* Butoanele din meniul dropdown */
+.menu-item {
+  background: none;
+  border: none;
+  padding: 10px 20px;
+  width: 100%;
+  text-align: right;
+  cursor: pointer;
+  color: #333;
+}
+
+.menu-item:hover {
+  background-color: #f0f0f0;
+}
+
+/* Container pentru selectorul de layere */
+.layer-selector-container {
+  width: 100%;
+  max-width: 400px;
+  margin-bottom: 20px;
+}
+
+/* Containerul hărții */
+.map-container {
+  width: 100%;
+  max-width: 900px;
+  flex-grow: 1;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}

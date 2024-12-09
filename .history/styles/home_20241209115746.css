@@ -1,0 +1,29 @@
+.map-container {
+    width: 100%;
+    height: calc(100vh - 160px);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin-top: 20px;
+}
+
+.layer-selector {
+    width: 100%;
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 10px;
+    background-color: var(--color-gunmetal);
+    border-radius: 8px;
+    text-align: center;
+}
+
+.layer-selector select {
+    width: 100%;
+    max-width: 300px;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid var(--color-border);
+    font-size: 1rem;
+    background-color: var(--color-jet);
+    color: white;
+}

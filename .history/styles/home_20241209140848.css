@@ -1,0 +1,48 @@
+.map-container {
+    width: 100%;
+    height: calc(100vh - 160px);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin-top: 20px;
+}
+
+.layer-selector {
+    width: 100%;
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 10px;
+    background-color: var(--color-gunmetal);
+    border-radius: 8px;
+    text-align: center;
+}
+
+.layer-selector select {
+    width: 100%;
+    max-width: 300px;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid var(--color-border);
+    font-size: 1rem;
+    background-color: var(--color-jet);
+    color: white;
+}
+.profile-button {
+  position: absolute; /* Fixează butonul în fereastră */
+  top: 20px; /* Distanța față de marginea de sus */
+  right: 20px; /* Distanța față de marginea din dreapta */
+  padding: 10px 20px;
+  background-color: #50D8D7;
+  border: none;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 16px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1000; /* Asigură-te că butonul este deasupra altor elemente */
+  transition: background-color 0.3s ease; /* Animație la hover */
+}
+
+.profile-button:hover {
+  background-color: #3bbab9; /* Schimbă culoarea la hover */
+}

@@ -1,0 +1,85 @@
+.map-container {
+    width: 100%;
+    height: calc(100vh - 160px);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin-top: 20px;
+}
+
+.layer-selector {
+    width: 100%;
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 10px;
+    background-color: var(--color-gunmetal);
+    border-radius: 8px;
+    text-align: center;
+}
+
+.layer-selector select {
+    width: 100%;
+    max-width: 300px;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid var(--color-border);
+    font-size: 1rem;
+    background-color: var(--color-jet);
+    color: white;
+}
+/* Containerul pentru butonul de meniu */
+.menu-container {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+/* Butonul de meniu */
+.menu-button {
+  padding: 10px;
+  background-color: #50d8d7;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 18px;
+  color: #fff;
+}
+
+.menu-button:hover {
+  background-color: #3bbab9;
+}
+
+/* Meniul */
+.menu {
+  position: absolute;
+  top: 50px;
+  right: 0;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+/* Lista din meniu */
+.menu ul {
+  list-style: none;
+  margin: 0;
+  padding: 10px;
+  text-align: right;
+}
+
+/* Butoanele din meniu */
+.menu ul li button {
+  background: none;
+  border: none;
+  padding: 10px 20px;
+  width: 100%;
+  text-align: right;
+  cursor: pointer;
+  color: #333;
+}
+
+.menu ul li button:hover {
+  background-color: #f0f0f0;
+}

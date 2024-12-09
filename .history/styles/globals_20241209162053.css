@@ -1,0 +1,200 @@
+:root {
+    /* Paleta de culori */
+    --color-darkblue: #212A31; /* Fundal general */
+    --color-darkblue-shadow: #2E3944; /* Fundal secundar */
+    --color-davys-gray: #4F5165; /* Text */
+    --color-glaucous: #547AA5; /* Accente */
+    --color-robin-egg-blue: #50D8D7; /* Butoane sau elemente proeminente */
+    --color-hover-robin-egg-blue: #37b0a3; /* Hover pentru butoanele de autentificare */
+    --color-white: #ffffff; /* Text alb */
+    --color-black-transparent: rgba(0, 0, 0, 0.2); /* Umbre subtile */
+    
+    /* Alte culori utile */
+    --color-error: #e74c3c; /* Roșu pentru erori */
+    --color-border: #ccc; /* Borduri */
+    --color-success: #A6A6A6; /* Culoare gri pentru mesajul de succes */
+}
+
+html {
+    height: 100%; /* Asigură înălțimea pentru layout */
+    box-sizing: border-box; /* Standardizează dimensiunile */
+}
+
+*, *::before, *::after {
+    box-sizing: inherit;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif, "ClashGrootesk-Regular";
+    background: linear-gradient(135deg, var(--color-glaucous), var(--color-robin-egg-blue));
+    color: var(--color-davys-gray);
+    min-height: 100vh;
+    line-height: 1.5;
+    display: flex;
+    flex-direction: column; /* Layout vertical */
+}
+
+/* Stiluri generale pentru header și footer */
+header {
+    background-color: var(--color-gunmetal);
+    color: white;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Umbra pentru separare */
+}
+
+footer {
+    background-color: var(--color-gunmetal);
+    color: white;
+    text-align: center;
+    padding: 15px;
+    margin-top: auto; /* Asigură poziționarea la final */
+    box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1); /* Umbra inversă */
+}
+
+/* Titluri globale */
+h1, h2, h3, h4, h5, h6 {
+    color: var(--color-gunmetal);
+    margin: 0;
+}
+
+/* Linkuri */
+a {
+    color: var(--color-glaucous);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Formate globale pentru butoane */
+button {
+    font-family: inherit;
+    font-size: 1rem;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background-color: var(--color-robin-egg-blue);
+    color: white;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: var(--color-glaucous);
+}
+
+button:disabled {
+    background-color: var(--color-border);
+    cursor: not-allowed;
+}
+
+/* Formate generale pentru input */
+input, select, textarea {
+    font-family: inherit;
+    font-size: 1rem;
+    padding: 10px;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    width: 100%;
+    max-width: 400px;
+    margin: 10px 0;
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--color-robin-egg-blue);
+    box-shadow: 0 0 5px rgba(80, 216, 215, 0.5);
+}
+
+/* Erori */
+.error-message {
+    color: var(--color-error);
+    font-size: 0.9rem;
+    margin-top: -5px;
+    text-align: center;
+}
+
+/* Mesaje de succes */
+.success-message {
+    color: var(--color-success);
+    font-size: 1rem;
+    font-weight: bold;
+    margin: 10px 0;
+    text-align: center;
+}
+
+/* Animații */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Dropdown pentru meniul global */
+.menu-dropdown {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    display: inline-block;
+    z-index: 1000;
+  }
+  
+  /* Butonul dropdown */
+  .menu-dropbtn {
+    background-color: #3D5C7F;
+    color: white;
+    padding: 12px;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+    border-radius: 3px;
+  }
+  
+  .menu-dropbtn:hover {
+    background-color: #2D4B6F;
+  }
+  
+  /* Conținutul dropdown */
+  .menu-dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    border-radius: 4px;
+  }
+  
+  /* Activează dropdown-ul la hover */
+  .menu-dropdown:hover .menu-dropdown-content {
+    display: block;
+  }
+  
+  /* Elemente din dropdown */
+  .menu-dropdown-content .menu-item {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    background: none;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  
+  .menu-dropdown-content .menu-item:hover {
+    background-color: #f1f1f1;
+  }
+  
