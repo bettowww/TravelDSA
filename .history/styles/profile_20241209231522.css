@@ -1,15 +1,14 @@
 .container {
     display: flex;
     justify-content: center;
-    align-items: start;
+    align-items: center; /* Centrează vertical */
     background-color: var(--color-white2);
     border-radius: 8px;
     padding: 20px;
     box-shadow: 0 4px 8px var(--color-black-transparent);
-    margin: 100px auto;
-    width: 100%;
-    max-width: 800px;
-    box-sizing: border-box;
+    margin: auto; /* Centrează orizontal */
+    max-width: 50%;
+    height: 80vh; /* Adaugă o înălțime pentru a centra vertical */
 }
 
 .profile-picture {
@@ -24,18 +23,21 @@
 }
 
 .profile-settings {
-    width: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column; /* Aranjează conținutul vertical */
+    justify-content: center; /* Centrează conținutul pe verticală */
 }
 
 .input-group {
     display: flex;
-    flex-direction: column; /* Aliniază elementele pe axa verticală */
-    gap: 8px; /* Spațiu între casete */
-    margin-bottom: 20px; /* Spațiu între grupul de input-uri și butoane */
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
 }
-  
+
 .input-group input {
-    width: 100%; /* Asigură-te că input-urile ocupă toată lățimea disponibilă */
+    width: 100%; 
     padding: 10px;
     font-size: 1rem;
     border: 1px solid var(--color-white2);
@@ -44,9 +46,9 @@
 }
 
 .input-group input:focus {
-    border-color: black; /* Evidențiază bordura la focus */
+    border-color: black;
     outline: none;
-    box-shadow: 0 0 5px var(--color-black-transparent); /* Glow albastru la focus */
+    box-shadow: 0 0 5px var(--color-black-transparent);
 }
 
 .profile-settings h4 {
@@ -62,9 +64,9 @@
     padding: 10px 20px;
     border-radius: 4px;
     cursor: pointer;
-    width: 400px; /* Ocupă întreaga lățime disponibilă în container */
+    width: 100%; /* Aliniază lungimea cu cea a input-urilor */
     margin-top: 10px;
-    box-sizing: border-box; /* Include padding și border în dimensiune */
+    box-sizing: border-box;
 }
 
 .view-routes-button:hover,

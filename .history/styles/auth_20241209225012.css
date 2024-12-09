@@ -12,7 +12,7 @@
 .auth-toggle-button {
     background: none;
     border: none;
-    color: var(--color-white2);
+    color: black;
     cursor: pointer;
     text-decoration: underline;
     font-size: 1rem;
@@ -57,7 +57,7 @@
     border: 1px solid var(--color-white2);
     border-radius: 8px;
     background-color: var(--color-white2);
-    color: black;
+    color: var(--color-white2);
 }
 
 

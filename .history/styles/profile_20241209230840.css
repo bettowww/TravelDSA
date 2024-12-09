@@ -1,54 +1,54 @@
 .container {
     display: flex;
+    flex-direction: column; /* Asigură că totul se aliniază pe verticală pe ecrane mici */
     justify-content: center;
-    align-items: start;
+    align-items: center;
     background-color: var(--color-white2);
     border-radius: 8px;
     padding: 20px;
     box-shadow: 0 4px 8px var(--color-black-transparent);
-    margin: 100px auto;
-    width: 100%;
-    max-width: 800px;
-    box-sizing: border-box;
+    margin: 20px auto;
+    width: 90%; /* Se ajustează automat la dimensiunea ecranului */
+    max-width: 600px; /* Limitează lățimea maximă */
+    box-sizing: border-box; /* Include padding și border în dimensiune */
 }
 
 .profile-picture {
     text-align: center;
-    margin-right: 20px;
+    margin-bottom: 20px; /* Ajustare pentru ecrane mici */
 }
 
 .profile-picture img {
     border-radius: 100%;
-    width: 150px;
-    height: 150px;
+    width: 140px;
+    height: 140px;
 }
 
 .profile-settings {
-    width: 100%;
+    width: 100%; /* Asigură că ocupă lățimea containerului */
 }
 
 .input-group {
     display: flex;
-    flex-direction: column; /* Aliniază elementele pe axa verticală */
-    gap: 8px; /* Spațiu între casete */
-    margin-bottom: 20px; /* Spațiu între grupul de input-uri și butoane */
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 20px;
+    width: 100%; /* Se scalează cu containerul */
 }
-  
+
 .input-group input {
-    width: 100%; /* Asigură-te că input-urile ocupă toată lățimea disponibilă */
+    width: 100%; /* Umple întreaga lățime a grupului */
     padding: 10px;
     font-size: 1rem;
     border: 1px solid var(--color-white2);
     border-radius: 4px;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
 }
-
-.input-group input:focus {
+  .input-group input:focus {
     border-color: black; /* Evidențiază bordura la focus */
     outline: none;
     box-shadow: 0 0 5px var(--color-black-transparent); /* Glow albastru la focus */
-}
-
+  }
 .profile-settings h4 {
     font-size: 1.25rem;
     margin-bottom: 10px;
@@ -83,3 +83,4 @@
     border-radius: 4px;
     cursor: pointer;
 }
+

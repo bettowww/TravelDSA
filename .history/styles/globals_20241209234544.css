@@ -165,7 +165,7 @@ input:focus, select:focus, textarea:focus {
 
 /* Logo-ul din buton */
 .menu-logo {
-    width: 60px; /* Dimensiunea inițială a logo-ului */
+    width: 40px; /* Dimensiunea inițială a logo-ului */
     height: auto; /* Păstrează proporțiile */
     cursor: pointer; /* Arată că este un element interactiv */
     margin: auto; /* Asigură centrare în cadrul butonului */

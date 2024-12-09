@@ -140,7 +140,6 @@ input:focus, select:focus, textarea:focus {
     }
 }
 
-
 /* Dropdown pentru meniul global */
 .menu-dropdown {
     position: fixed;
@@ -149,35 +148,24 @@ input:focus, select:focus, textarea:focus {
     display: inline-block;
     z-index: 1000;
   }
-
- /* Butonul dropdown */
- .menu-dropbtn {
+  
+  /* Butonul dropdown */
+  .menu-dropbtn {
     background-color: var(--color-darkblue1);
-    padding: 4px;
+    color: var(--color-white2);
+    padding: 12px;
+    font-size: 14px;
     border: none;
     cursor: pointer;
-    border-radius: 4px;
-}
-
-.menu-dropbtn:hover {
+    border-radius: 3px;
+  }
+  
+  .menu-dropbtn:hover {
     background-color: var(--color-darkblue2);
-}
-
-/* Logo-ul din buton */
-.menu-logo {
-    width: 60px; /* Dimensiunea inițială a logo-ului */
-    height: auto; /* Păstrează proporțiile */
-    cursor: pointer; /* Arată că este un element interactiv */
-    margin: auto; /* Asigură centrare în cadrul butonului */
-}
+  }
   
-/* Activează dropdown-ul la hover */
-.menu-dropdown:hover .menu-dropdown-content {
-    display: block;
-}
-  
-/* Conținutul dropdown */
-.menu-dropdown-content {
+  /* Conținutul dropdown */
+  .menu-dropdown-content {
     display: none;
     position: absolute;
     top: 100%;
@@ -187,24 +175,29 @@ input:focus, select:focus, textarea:focus {
     box-shadow: 0px 8px 16px 0px var(--color-black-transparent);
     z-index: 1000;
     border-radius: 4px;
-}
-
-/* Elemente din dropdown */
-.menu-dropdown-content .menu-item {
-color: black;
-padding: 12px 16px;
-text-decoration: none;
-display: block;
-background: none;
-border: none;
-text-align: left;
-cursor: pointer;
-font-size: 14px;
-width: 100%;
-box-sizing: border-box;
-}
+  }
   
-.menu-dropdown-content .menu-item:hover {
-background-color: white;
-}
+  /* Activează dropdown-ul la hover */
+  .menu-dropdown:hover .menu-dropdown-content {
+    display: block;
+  }
+  
+  /* Elemente din dropdown */
+  .menu-dropdown-content .menu-item {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    background: none;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    font-size: 14px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .menu-dropdown-content .menu-item:hover {
+    background-color: white;
+  }
 

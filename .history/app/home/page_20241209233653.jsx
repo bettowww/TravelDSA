@@ -11,7 +11,7 @@ const HomePage = () => {
   return (
     <div className="home-container">
       <h1 className="home-title">Welcome to TravelDSA!</h1>
-      <img src="/pictures/logo.png" />
+      <img src="../../public/pictures/logo.png" />
     </div>
   );
 };

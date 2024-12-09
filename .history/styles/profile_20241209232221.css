@@ -62,7 +62,7 @@
     padding: 10px 20px;
     border-radius: 4px;
     cursor: pointer;
-    width: 400px; /* Ocupă întreaga lățime disponibilă în container */
+    max-width: 400px; /* Ocupă întreaga lățime disponibilă în container */
     margin-top: 10px;
     box-sizing: border-box; /* Include padding și border în dimensiune */
 }

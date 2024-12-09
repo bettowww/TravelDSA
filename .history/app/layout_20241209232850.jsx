@@ -26,8 +26,8 @@ const RootLayout = ({ children }) => {
         {/* Meniul global */}
         <div className="menu-dropdown">
         <button className="menu-dropbtn">
-            <img src="/pictures/logo.png" alt="MENU" className="menu-logo"/>
-        </button>
+  <img src="/path-to-your-logo.png" alt="Menu Logo" className="menu-logo" />
+</button>
           <div className="menu-dropdown-content">
             <button className="menu-item" onClick={handleHomeClick}>
               Home

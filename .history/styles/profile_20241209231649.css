@@ -1,41 +1,47 @@
 .container {
     display: flex;
+    flex-direction: column; /* Asigură că totul se aliniază pe verticală pe ecrane mici */
     justify-content: center;
-    align-items: start;
+    align-items: center;
     background-color: var(--color-white2);
     border-radius: 8px;
     padding: 20px;
     box-shadow: 0 4px 8px var(--color-black-transparent);
-    margin: 100px auto;
-    width: 100%;
-    max-width: 800px;
-    box-sizing: border-box;
+    margin: 20px auto;
+    width: 100%; /* Se ajustează automat la dimensiunea ecranului */
+    max-width: 600px; /* Limitează lățimea maximă */
+    box-sizing: border-box; /* Include padding și border în dimensiune */
 }
 
 .profile-picture {
     text-align: center;
-    margin-right: 20px;
+    margin-bottom: 20px; /* Ajustare pentru ecrane mici */
 }
 
 .profile-picture img {
     border-radius: 100%;
-    width: 150px;
-    height: 150px;
+    width: 140px;
+    height: 140px;
 }
 
 .profile-settings {
-    width: 100%;
+    width: 100%; /* Asigură că ocupă lățimea containerului */
+    text-align: center;
 }
 
 .input-group {
     display: flex;
-    flex-direction: column; /* Aliniază elementele pe axa verticală */
-    gap: 8px; /* Spațiu între casete */
-    margin-bottom: 20px; /* Spațiu între grupul de input-uri și butoane */
+    flex-direction: column;
+    text-align: center;
+    gap: 8px;
+    margin-bottom: 20px;
+    width: 100%; /* Se scalează cu containerul */
 }
-  
+
 .input-group input {
-    width: 100%; /* Asigură-te că input-urile ocupă toată lățimea disponibilă */
+    text-align: ce;
+    width: 100%; /* Umple întreaga lățime a grupului */
+    max-width: 400px; /* Asigură aceeași lățime ca input-urile */
     padding: 10px;
     font-size: 1rem;
     border: 1px solid var(--color-white2);
@@ -56,15 +62,15 @@
 
 .view-routes-button,
 .save-button {
+    width: 100%; /* Se scalează cu containerul */
+    max-width: 400px; /* Asigură aceeași lățime ca input-urile */
     background-color: var(--color-darkblue1);
     color: #fff;
     border: none;
-    padding: 10px 20px;
+    padding: 10px;
     border-radius: 4px;
     cursor: pointer;
-    width: 400px; /* Ocupă întreaga lățime disponibilă în container */
     margin-top: 10px;
-    box-sizing: border-box; /* Include padding și border în dimensiune */
 }
 
 .view-routes-button:hover,
@@ -83,3 +89,4 @@
     border-radius: 4px;
     cursor: pointer;
 }
+
