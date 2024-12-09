@@ -5,85 +5,126 @@
     --color-davys-gray: #4F5165; /* Text */
     --color-glaucous: #547AA5; /* Accente */
     --color-robin-egg-blue: #50D8D7; /* Butoane sau elemente proeminente */
-  
+
     /* Alte culori utile */
     --color-error: #e74c3c; /* Roșu pentru erori */
     --color-border: #ccc; /* Borduri */
     --color-success: #A6A6A6; /* Culoare gri pentru mesajul de succes */
 }
 
-
-
-@font-face {
-    font-family: 'ClashGrootesk-Variable';
-    src: url("/fonts/ClashGrootesk-Variable.ttf") format("truetype");
+html {
+    height: 100%; /* Asigură înălțimea pentru layout */
+    box-sizing: border-box; /* Standardizează dimensiunile */
 }
 
-@font-face {
-    font-family: "ClashGrootesk-Bold";
-    src: url("/fonts/ClashGrootesk-Bold.otf") format("opentype");
-}
-
-@font-face {
-    font-family: "ClashGrootesk-Regular";
-    src: url("/fonts/ClashGrootesk-Regular.otf") format("opentype");
-}
-
-@font-face {
-    font-family: "ClashGrootesk-Light";
-    src: url("/fonts/ClashGrootesk-Light.otf") format("opentype");
-}
-
-@font-face {
-    font-family: "ClashGrootesk-Medium";
-    src: url("/fonts/ClashGrootesk-Medium.otf") format("opentype");
+*, *::before, *::after {
+    box-sizing: inherit;
 }
 
 body {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif, "ClashGrootesk-Regular";
-    background: linear-gradient(135deg, var(--color-glaucous), var(--color-robin-egg-blue)); /* Gradient */
-    color: var(--color-davys-gray); /* Text implicit */
+    background: linear-gradient(135deg, var(--color-glaucous), var(--color-robin-egg-blue));
+    color: var(--color-davys-gray);
     min-height: 100vh;
+    line-height: 1.5;
     display: flex;
-    align-items: center; /* Aliniere verticală pe ecran */
-    justify-content: center; /* Aliniere orizontală pe ecran */
+    flex-direction: column; /* Layout vertical */
 }
 
+/* Stiluri generale pentru header și footer */
 header {
-    background-color: #333;
+    background-color: var(--color-gunmetal);
     color: white;
-    padding: 10px;
+    padding: 15px;
     text-align: center;
-}
-
-main {
-    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Umbra pentru separare */
 }
 
 footer {
-    background-color: #333;
+    background-color: var(--color-gunmetal);
     color: white;
     text-align: center;
+    padding: 15px;
+    margin-top: auto; /* Asigură poziționarea la final */
+    box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1); /* Umbra inversă */
+}
+
+/* Titluri globale */
+h1, h2, h3, h4, h5, h6 {
+    color: var(--color-gunmetal);
+    margin: 0;
+}
+
+/* Linkuri */
+a {
+    color: var(--color-glaucous);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Formate globale pentru butoane */
+button {
+    font-family: inherit;
+    font-size: 1rem;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background-color: var(--color-robin-egg-blue);
+    color: white;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: var(--color-glaucous);
+}
+
+button:disabled {
+    background-color: var(--color-border);
+    cursor: not-allowed;
+}
+
+/* Formate generale pentru input */
+input, select, textarea {
+    font-family: inherit;
+    font-size: 1rem;
     padding: 10px;
-}
-
-.auth-form {
-    max-width: 600px; /* Crește lățimea formularului */
-    width: 100%;
-    height: auto; /* Permite formularului să se ajusteze la conținut */
-    min-height: 300px; /* Crește înălțimea minimă a formularului */
-    margin: 2rem auto;
-    padding: 3rem; /* Crește padding-ul pentru mai mult spațiu interior */
-    background-color: var(--color-jet);
     border: 1px solid var(--color-border);
-    border-radius: 16px; /* Margini rotunjite */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Umbre mai accentuate */
-    animation: fadeIn 0.5s ease-in-out;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 400px;
+    margin: 10px 0;
 }
 
-/* Animație fade-in */
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--color-robin-egg-blue);
+    box-shadow: 0 0 5px rgba(80, 216, 215, 0.5);
+}
+
+/* Erori */
+.error-message {
+    color: var(--color-error);
+    font-size: 0.9rem;
+    margin-top: -5px;
+    text-align: center;
+}
+
+/* Mesaje de succes */
+.success-message {
+    color: var(--color-success);
+    font-size: 1rem;
+    font-weight: bold;
+    margin: 10px 0;
+    text-align: center;
+}
+
+/* Animații */
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -93,102 +134,4 @@ footer {
         opacity: 1;
         transform: translateY(0);
     }
-}
-
-.auth-form-title {
-    font-size: 1.5rem;
-    margin-bottom: 1.5rem;
-    text-align: center;
-    color: white; /* Titlu proeminent */
-}
-
-.auth-form-group {
-    margin-bottom: 1rem;
-}
-
-.auth-form-label {
-    font-size: 1rem; /* Text puțin mai mare */
-    color: #ffffff; /* Text alb pentru vizibilitate */
-    font-weight: bold; /* Face textul mai proeminent */
-    margin-bottom: 5px; /* Spațiu între etichetă și câmp */
-    display: block; /* Eticheta rămâne deasupra câmpului */
-    text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.5); /* Umbre subtile pentru contrast */
-}
-
-.auth-form-input {
-    width: 100%;
-    padding: 12px;
-    font-size: 1rem;
-    border: 1px solid var(--color-border);
-    border-radius: 8px;
-    background-color: var(--color-gunmetal); /* Fundal întunecat */
-    color: #ffffff; /* Text alb pentru vizibilitate */
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-/* Placeholder text */
-.auth-form-input::placeholder {
-    color: #cccccc; /* Gri deschis pentru contrast */
-    font-style: italic; /* Text italic pentru a-l diferenția */
-}
-
-/* Stiluri pentru input focus */
-.auth-form-input:focus {
-    outline: none;
-    border-color: var(--color-robin-egg-blue); /* Albastru pentru accent la focus */
-    background-color: var(--color-jet); /* Fundal ușor mai întunecat */
-    box-shadow: 0 0 5px rgba(80, 216, 215, 0.5); /* Efect de iluminare */
-}
-
-.success-message {
-    color: var(--color-success); /* Gri pentru mesajul de succes */
-    text-align: center;
-    font-size: 1.3rem; /* Mai mare decât textul normal */
-    font-weight: bold; /* Text proeminent */
-    margin-bottom: 20px;
-}
-
-.auth-form-error {
-    color: #ff4d4d; /* Roșu intens */
-    font-size: 1rem; /* Puțin mai mare pentru vizibilitate */
-    margin-top: -0.5rem;
-    margin-bottom: 1rem;
-    text-align: center;
-    text-shadow: 0px 1px 3px rgba(0, 0, 0, 0.5); /* Umbre subtile */
-}
-
-.auth-form-button {
-    padding: 12px;
-    font-size: 1rem;
-    color: var(--color-gunmetal); /* Text buton */
-    background-color: var(--color-robin-egg-blue); /* Fundal buton */
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: transform 0.2s ease, background-color 0.3s ease;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Adăugare de umbră */
-}
-
-.auth-form-button:hover {
-    background-color: var(--color-glaucous); /* Hover */
-    transform: translateY(-3px); /* Efect de "ridicare" */
-    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
-}
-
-.auth-form-button:active {
-    transform: translateY(1px); /* Buton apăsat */
-    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
-}
-
-.auth-toggle-button {
-    color: #50D8D7; /* Culoare deschisă pentru contrast */
-    cursor: pointer;
-    text-decoration: underline;
-    font-weight: bold;
-    font-size: 1rem;
-}
-
-.auth-toggle-button:hover {
-    color:var(); /* Verde intens la hover */
-    text-shadow: 0px 1px 3px rgba(0, 0, 0, 0.5); /* Efect de iluminare */
 }
