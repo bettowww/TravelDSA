@@ -1,0 +1,303 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+:root {
+    /* Paleta de culori */
+    --color-darkblue1: #212A31;
+    --color-darkblue2: #2E3944;
+    --color-lightblue1: #124E66;
+    --color-lightblue2: hsl(190, 12%, 51%);
+    --color-white2: #D3D9D4;
+    
+    --color-black: #000000;
+
+    --color-black-transparent: rgba(0, 0, 0, 0.2);
+    
+    /* Alte culori utile */
+    --color-error: #e74c3c; /* Roșu pentru erori */
+    --color-success: #A6A6A6; /* Culoare gri pentru mesajul de succes */
+}
+
+html {
+    height: 100%; /* Asigură înălțimea pentru layout */
+    box-sizing: border-box; /* Standardizează dimensiunile */
+}
+
+*, *::before, *::after {
+    box-sizing: inherit;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif, "ClashGrootesk-Regular";
+    background: linear-gradient(135deg, var(--color-lightblue1), var(--color-lightblue2));
+    color: var(--color-darkblue1);
+    min-height: 100vh;
+    line-height: 1.5;
+    display: flex;
+    flex-direction: column; /* Layout vertical */
+}
+
+/* Stiluri generale pentru header și footer */
+header {
+    background-color: var(--color-darkblue1);
+    color: white;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 4px 6px var(--color-black-transparent)
+}
+
+footer {
+    background-color: var(--color-darkblue1);
+    color: white;
+    text-align: center;
+    padding: 15px;
+    margin-top: auto; /* Asigură poziționarea la final */
+    box-shadow: 0 -4px 6px var(--color-black-transparent)
+}
+
+/* Titluri globale */
+h1, h2, h3, h4, h5, h6 {
+    color: var(--color-darkblue1);
+    margin: 0;
+}
+
+/* Linkuri */
+a {
+    color: var(--color-darkblue1);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Formate globale pentru butoane */
+button {
+    font-family: inherit;
+    font-size: 1rem;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background-color: var(--color-lightblue1);
+    color: white;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: var(--color-lightblue2);
+}
+
+button:disabled {
+    background-color: var(--color-lightblue2);
+    cursor: not-allowed;
+}
+
+/* Formate generale pentru input */
+input, select, textarea {
+    font-family: inherit;
+    font-size: 1rem;
+    padding: 10px;
+    border: 1px solid var(--color-white2);
+    border-radius: 8px;
+    width: 100%;
+    max-width: 400px;
+    margin: 10px 0;
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--color-white2);
+    box-shadow: 0 0 5px var(--color-lightblue1);
+}
+
+/* Erori */
+.error-message {
+    color: var(--color-error);
+    font-size: 0.9rem;
+    margin-top: -5px;
+    text-align: center;
+}
+
+/* Mesaje de succes */
+.success-message {
+    color: var(--color-success);
+    font-size: 1rem;
+    font-weight: bold;
+    margin: 10px 0;
+    text-align: center;
+}
+
+/* Animații */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Dropdown pentru meniul global */
+.menu-dropdown {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    display: inline-block;
+    z-index: 1000;
+  }
+  
+  /* Butonul dropdown */
+  .menu-dropbtn {
+    background-color: var(--color-darkblue1);
+    color: var(--color-white2);
+    padding: 12px;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+    border-radius: 3px;
+  }
+  
+  .menu-dropbtn:hover {
+    background-color: var(--color-darkblue2);
+  }
+  
+  /* Conținutul dropdown */
+  .menu-dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: var(--color-white2);
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px var(--color-black-transparent);
+    z-index: 1000;
+    border-radius: 4px;
+  }
+  
+  /* Activează dropdown-ul la hover */
+  .menu-dropdown:hover .menu-dropdown-content {
+    display: block;
+  }
+  
+  /* Elemente din dropdown */
+  .menu-dropdown-content .menu-item {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    background: none;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    font-size: 14px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .menu-dropdown-content .menu-item:hover {
+    background-color: white;
+  }
+  /* Tailwind Styles */
+
+.app {
+    @apply relative z-10 flex justify-center items-center flex-col max-w-7xl mx-auto sm:px-16 px-6;
+  }
+  
+  .black_btn {
+    @apply rounded-full border border-black bg-black py-1.5 px-5 text-white transition-all hover:bg-white hover:text-black text-center text-sm font-inter flex items-center justify-center;
+  }
+  
+  .outline_btn {
+    @apply rounded-full border border-black bg-transparent py-1.5 px-5 text-black transition-all hover:bg-black hover:text-white text-center text-sm font-inter flex items-center justify-center;
+  }
+  
+  .head_text {
+    @apply mt-5 text-5xl font-extrabold leading-[1.15] text-black sm:text-6xl;
+  }
+  
+  .orange_gradient {
+    @apply bg-gradient-to-r from-amber-500 via-orange-600 to-yellow-500 bg-clip-text text-transparent;
+  }
+  
+  .green_gradient {
+    @apply bg-gradient-to-r from-green-400 to-green-500 bg-clip-text text-transparent;
+  }
+  
+  .blue_gradient {
+    @apply bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent;
+  }
+  
+  .desc {
+    @apply mt-5 text-lg text-gray-600 sm:text-xl max-w-2xl;
+  }
+  
+  .search_input {
+    @apply block w-full rounded-md border border-gray-200 bg-white py-2.5 font-satoshi pl-5 pr-12 text-sm shadow-lg font-medium focus:border-black focus:outline-none focus:ring-0;
+  }
+  
+  .copy_btn {
+    @apply w-7 h-7 rounded-full bg-white/10 shadow-[inset_10px_-50px_94px_0_rgb(199,199,199,0.2)] backdrop-blur flex justify-center items-center cursor-pointer;
+  }
+  
+  .glassmorphism {
+    @apply rounded-xl border border-gray-200 bg-white/20 shadow-[inset_10px_-50px_94px_0_rgb(199,199,199,0.2)] backdrop-blur p-5;
+  }
+  
+  .prompt_layout {
+    @apply space-y-6 py-8 sm:columns-2 sm:gap-6 xl:columns-3;
+  }
+  
+  /* Feed Component */
+  .feed {
+    @apply mt-16 mx-auto w-full max-w-xl flex justify-center items-center flex-col gap-2;
+  }
+  
+  /* Form Component */
+  .form_textarea {
+    @apply w-full flex rounded-lg h-[200px] mt-2 p-3 text-sm text-gray-500 outline-0;
+  }
+  
+  .form_input {
+    @apply w-full flex rounded-lg mt-2 p-3 text-sm text-gray-500 outline-0;
+  }
+  
+  /* Nav Component */
+  .logo_text {
+    @apply max-sm:hidden font-satoshi font-semibold text-lg text-black tracking-wide;
+  }
+  
+  .dropdown {
+    @apply absolute right-0 top-full mt-3 w-full p-5 rounded-lg bg-white min-w-[210px] flex flex-col gap-2 justify-end items-end;
+  }
+  
+  .dropdown_link {
+    @apply text-sm font-inter text-gray-700 hover:text-gray-500 font-medium;
+  }
+  
+  /* PromptCard Component */
+  .prompt_card {
+    @apply flex-1 break-inside-avoid rounded-lg border border-gray-300 bg-white/20 bg-clip-padding p-6 pb-4 backdrop-blur-lg backdrop-filter md:w-[360px] w-full h-fit;
+  }
+  
+  .flex-center {
+    @apply flex justify-center items-center;
+  }
+  
+  .flex-start {
+    @apply flex justify-start items-start;
+  }
+  
+  .flex-end {
+    @apply flex justify-end items-center;
+  }
+  
+  .flex-between {
+    @apply flex justify-between items-center;
+  }

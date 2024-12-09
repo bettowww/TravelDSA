@@ -1,0 +1,80 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    background-color: var(--color-white2);
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px var(--color-black-transparent);
+    margin: 20px auto;
+    max-width: 50%;
+}
+
+.profile-picture {
+    text-align: center;
+    margin-right: 20px;
+}
+
+.profile-picture img {
+    border-radius: 100%;
+    width: 150px;
+    height: 150px;
+}
+
+.profile-settings {
+    flex: 1;
+    flex-direction: column;
+    margin: 0 10px;
+}
+
+.profile-details {
+    text-align: center;
+    
+}
+
+.profile-details h4 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.profile-settings input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.profile-settings h4 {
+    font-size: 1.25rem;
+    margin-bottom: 10px;
+}
+
+.view-rutes-button,
+.save-button {
+    background-color: var(--color-darkblue1);
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.view-rutes-button:hover,
+.save-button:hover {
+    background-color: var(--color-darkblue2);
+}
+
+.logout-button {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    background-color: #e74c3c;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+}
