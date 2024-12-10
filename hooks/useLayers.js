@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { restaurantsRenderer, muzeumsRenderer } from "../arcgis/renders"; // Importă rendererele
+import { manastiriRenderer, restaurantsRenderer, muzeumsRenderer } from "../arcgis/renders"; // Importă rendererele
 
 const useLayers = () => {
   const [selectedLayer, setSelectedLayer] = useState(null);
@@ -15,6 +15,12 @@ const useLayers = () => {
       url: "https://services8.arcgis.com/BBQ8y8wlr7sbDPZa/arcgis/rest/services/muzee_romania/FeatureServer",
       renderer: muzeumsRenderer,
     },
+    {
+      name: "Manastiri",
+      url:"https://services3.arcgis.com/087BfB5SU06CcLqR/arcgis/rest/services/Manastiri_Romania/FeatureServer",
+      apiKey: process.env.REACT_APP_ARCGIS_API_KEY,
+      renderer: manastiriRenderer,
+    }
   ];
 
   return { selectedLayer, setSelectedLayer, layers };
