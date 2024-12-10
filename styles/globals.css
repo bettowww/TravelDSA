@@ -208,3 +208,12 @@ box-sizing: border-box;
 background-color: white;
 }
 
+  .logo {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: 1000;
+    pointer-events: none; 
+  }
+  
+
