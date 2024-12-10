@@ -15,13 +15,7 @@ const LayerSelector = ({ layers, selectedLayer, onSelectLayer }) => {
     >
       <InputLabel
         sx={{
-            color: "var(--color-white2)",
-            "&.Mui-focused": {
-            color: "white", // Culoarea când are focus
-            },
-            "&.MuiFormLabel-filled": {
-            color: "white", // Culoarea când este completat
-            },
+          color: "var(--color-white2)",
         }}
       >
         Layer
@@ -36,10 +30,11 @@ const LayerSelector = ({ layers, selectedLayer, onSelectLayer }) => {
             color: "var(--color-white2)",
             backgroundColor: "var(--color-darkblue1)",
             "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-            borderColor: "white", // Schimbă culoarea outline-ului la focus
+              borderColor: "white", // Schimbă culoarea outline-ului la focus
+              color: "white"
             },
             "&:hover .MuiOutlinedInput-notchedOutline": {
-            borderColor: "white", // Schimbă culoarea outline-ului la hover
+              borderColor: "white", // Schimbă culoarea outline-ului la hover
             },
           }}
       >

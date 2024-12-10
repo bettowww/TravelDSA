@@ -36,10 +36,10 @@ const LayerSelector = ({ layers, selectedLayer, onSelectLayer }) => {
             color: "var(--color-white2)",
             backgroundColor: "var(--color-darkblue1)",
             "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-            borderColor: "white", // Schimbă culoarea outline-ului la focus
+              borderColor: "white", // Schimbă culoarea outline-ului la focus
             },
             "&:hover .MuiOutlinedInput-notchedOutline": {
-            borderColor: "white", // Schimbă culoarea outline-ului la hover
+              borderColor: "white", // Schimbă culoarea outline-ului la hover
             },
           }}
       >

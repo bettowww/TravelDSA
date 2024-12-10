@@ -1,0 +1,35 @@
+/* Container pentru toata pagina */
+.map-page-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    min-height: 100vh;
+  }
+  
+  /* Titlul hărții */
+  .map-page-title {
+    margin-bottom: 20px;
+    color: var(--color-white2);
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+  }
+  
+  /* Container pentru selectorul de layere */
+  .layer-selector-container {
+    width: 100%;
+    max-width: 400px;
+    margin-bottom: 20px;
+  }
+  
+  /* Container pentru hartă */
+  .map-container {
+    width: 100%;
+    height: calc(100vh - 200px); /* Ajustează în funcție de pagina ta */
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px var(--color-black-transparent);
+  }
+  
