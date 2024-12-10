@@ -1,0 +1,210 @@
+
+:root {
+    /* Paleta de culori */
+    --color-darkblue1: #212A31;
+    --color-darkblue2: #2E3944;
+    --color-lightblue1: #124E66;
+    --color-lightblue2: hsl(190, 12%, 51%);
+    --color-white2: #D3D9D4;
+    
+    --color-black: #000000;
+
+    --color-black-transparent: rgba(0, 0, 0, 0.2);
+    
+    /* Alte culori utile */
+    --color-error: #e74c3c; /* Roșu pentru erori */
+    --color-success: #A6A6A6; /* Culoare gri pentru mesajul de succes */
+}
+
+html {
+    height: 100%; /* Asigură înălțimea pentru layout */
+    box-sizing: border-box; /* Standardizează dimensiunile */
+}
+
+*, *::before, *::after {
+    box-sizing: inherit;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif, "ClashGrootesk-Regular";
+    background: linear-gradient(135deg, var(--color-lightblue1), var(--color-lightblue2));
+    color: var(--color-darkblue1);
+    min-height: 100vh;
+    line-height: 1.5;
+    display: flex;
+    flex-direction: column; /* Layout vertical */
+}
+
+/* Stiluri generale pentru header și footer */
+header {
+    background-color: var(--color-darkblue1);
+    color: white;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 4px 6px var(--color-black-transparent)
+}
+
+footer {
+    background-color: var(--color-darkblue1);
+    color: white;
+    text-align: center;
+    padding: 10px;
+    margin-top: auto; /* Asigură poziționarea la final */
+    box-shadow: 0 -4px 6px var(--color-black-transparent)
+}
+
+/* Titluri globale */
+h1, h2, h3, h4, h5, h6 {
+    color: var(--color-darkblue1);
+    margin: 0;
+}
+
+/* Linkuri */
+a {
+    color: var(--color-darkblue1);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Formate globale pentru butoane */
+button {
+    font-family: inherit;
+    font-size: 1rem;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background-color: var(--color-lightblue1);
+    color: white;
+    transition: background-color 0.3s ease;
+}
+
+/* button:hover {
+    background-color: var(--color-lightblue2);
+} */
+
+button:disabled {
+    background-color: var(--color-lightblue2);
+    cursor: not-allowed;
+}
+
+/* Formate generale pentru input */
+input, select, textarea {
+    font-family: inherit;
+    font-size: 1rem;
+    padding: 10px;
+    border: 1px solid var(--color-white2);
+    border-radius: 8px;
+    width: 100%;
+    max-width: 400px;
+    margin: 10px 0;
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--color-white2);
+    box-shadow: 0 0 5px var(--color-lightblue1);
+}
+
+/* Erori */
+.error-message {
+    color: var(--color-error);
+    font-size: 0.9rem;
+    margin-top: -5px;
+    text-align: center;
+}
+
+/* Mesaje de succes */
+.success-message {
+    color: var(--color-success);
+    font-size: 1rem;
+    font-weight: bold;
+    margin: 10px 0;
+    text-align: center;
+}
+
+/* Animații */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* Dropdown pentru meniul global */
+.menu-dropdown {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: inline-block;
+    z-index: 1000;
+  }
+
+ /* Butonul dropdown */
+ .menu-dropbtn {
+    background-color: var(--color-darkblue1);
+    padding: 4px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.menu-dropbtn:hover {
+    background-color: var(--color-darkblue2);
+}
+
+/* Logo-ul din buton */
+.menu-logo {
+    width: 60px; /* Dimensiunea inițială a logo-ului */
+    height: auto; /* Păstrează proporțiile */
+    cursor: pointer; /* Arată că este un element interactiv */
+    margin: auto; /* Asigură centrare în cadrul butonului */
+}
+  
+/* Activează dropdown-ul la hover */
+.menu-dropdown:hover .menu-dropdown-content {
+    display: block;
+}
+  
+/* Conținutul dropdown */
+.menu-dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: var(--color-white2);
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px var(--color-black-transparent);
+    z-index: 1000;
+    border-radius: 4px;
+}
+
+/* Elemente din dropdown */
+.menu-dropdown-content .menu-item {
+color: black;
+padding: 12px 16px;
+text-decoration: none;
+display: block;
+background: none;
+border: none;
+text-align: left;
+cursor: pointer;
+font-size: 14px;
+width: 100%;
+box-sizing: border-box;
+}
+  
+.menu-dropdown-content .menu-item:hover {
+background-color: white;
+}
+
