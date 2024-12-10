@@ -4,6 +4,8 @@ import { useRouter } from "next/navigation";  // Importă useRouter din 'next/na
 import AuthForm from "../../components/AuthForm"; // Componenta ta pentru formulare
 import { auth } from "../firebase/config"; // Configurarea Firebase
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { get, ref, set } from "firebase/database";
+import { db } from "../firebase/config";
 
 import "/styles/auth.css"; // Stilurile pentru paginile de autentificare
 
@@ -26,20 +28,56 @@ const AuthPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null); // Resetează erorile la trimiterea formularului
-
+  
     try {
+      let user;
       if (isSignUp) {
         // Crează un nou utilizator
-        await createUserWithEmailAndPassword(auth, email, password);
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        user = userCredential.user;
+  
+        // După crearea utilizatorului, creează profilul în Firebase Realtime Database
+        const userProfilesRef = ref(db, 'user_profiles/' + user.uid);
+        await set(userProfilesRef, {
+          email: user.email,
+          uid: user.uid,
+          firstName: "",  // Lasă aceste câmpuri goale pentru moment
+          lastName: "",
+          phone: "",
+        }).then(() => {
+          console.log("Profile data saved for user", user.uid);
+        }).catch((err) => {
+          console.error("Error saving profile:", err);
+        });
+  
         setSuccessMessage("Account created successfully! Please log in.");
         setIsSignUp(false); // Comută automat la Sign In
         setEmail(""); // Resetează câmpul Email
         setPassword(""); // Resetează câmpul Password
       } else {
-        // Autentifică utilizatorul
-        await signInWithEmailAndPassword(auth, email, password);
+        // Autentifică utilizatorul existent
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        user = userCredential.user;
         alert("Sign In successful!");
-
+  
+        // Verifică dacă profilul utilizatorului există în Firebase
+        const userProfileRef = ref(db, 'user_profiles/' + user.uid);
+        const snapshot = await get(userProfileRef);
+        if (!snapshot.exists()) {
+          // Dacă profilul nu există, adaugă-l
+          await set(userProfileRef, {
+            email: user.email,
+            uid: user.uid,
+            firstName: "",
+            lastName: "",
+            phone: "",
+          }).then(() => {
+            console.log("Profile data saved for user", user.uid);
+          }).catch((err) => {
+            console.error("Error saving profile:", err);
+          });
+        }
+  
         // După autentificare, redirecționează utilizatorul la /home
         router.push("/home");  // Redirecționează la pagina principală
       }
@@ -47,6 +85,7 @@ const AuthPage = () => {
       setError(err.message); // Afișează eroarea în caz de eșec
     }
   };
+  
 
   return (
     <div className="auth-page-container">
