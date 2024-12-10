@@ -1,11 +1,18 @@
 "use client";
 
 import React from "react";
-import LayerSelector from "../../components/map/LayerSelector"; // Componenta pentru selector
-import MapComponent from "../../components/map/MapComponent"; // Componenta pentru hartă
+import dynamic from "next/dynamic"; // Importă dynamic pentru dezactivarea SSR
 import useLayers from "../../hooks/useLayers"; // Hook pentru gestionarea layere-lor
-
 import "../../styles/map.css"; // Importă stilurile CSS
+
+// Dezactivează SSR pentru LayerSelector și MapComponent
+const LayerSelector = dynamic(() => import("../../components/map/LayerSelector"), {
+  ssr: false, // Dezactivează SSR
+});
+
+const MapComponent = dynamic(() => import("../../components/map/MapComponent"), {
+  ssr: false, // Dezactivează SSR
+});
 
 const MapPage = () => {
   const { selectedLayer, setSelectedLayer, layers } = useLayers();

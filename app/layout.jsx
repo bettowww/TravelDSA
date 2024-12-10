@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 import "../styles/globals.css"; // Importă stilurile globale
@@ -23,6 +24,10 @@ const RootLayout = ({ children }) => {
   return (
     <html lang="en">
       <body>
+        {/* Logo-ul în colțul paginii */}
+        <div className="logo">
+          <Image src="/romania.png" alt="Logo" width={150} height={150} />
+        </div>
         {/* Meniul global */}
         <div className="menu-dropdown">
         <button className="menu-dropbtn">
@@ -40,6 +45,7 @@ const RootLayout = ({ children }) => {
             </button>
           </div>
         </div>
+
 
         {/* Pagina curentă */}
         <div>{children}</div>

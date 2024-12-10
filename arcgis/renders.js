@@ -15,3 +15,12 @@ export const muzeumsRenderer = {
     size: "8px",
   },
 };
+
+export const manastiriRenderer = {
+  type: "simple",
+  symbol: {
+    type: "simple-marker",
+    color: "green",
+    size: "8px",
+  },
+};
