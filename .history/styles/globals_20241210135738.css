@@ -41,7 +41,7 @@ body {
 header {
     background-color: var(--color-darkblue1);
     color: white;
-    padding: 12px;
+    padding: 15px;
     text-align: center;
     box-shadow: 0 4px 6px var(--color-black-transparent)
 }
@@ -50,7 +50,7 @@ footer {
     background-color: var(--color-darkblue1);
     color: white;
     text-align: center;
-    padding: 12px;
+    padding: 10px;
     margin-top: auto; /* Asigură poziționarea la final */
     box-shadow: 0 -4px 6px var(--color-black-transparent)
 }
@@ -144,8 +144,8 @@ input:focus, select:focus, textarea:focus {
 /* Dropdown pentru meniul global */
 .menu-dropdown {
     position: absolute;
-    top: 25px;
-    right: 25px;
+    top: 20px;
+    right: 20px;
     display: inline-block;
     z-index: 1000;
   }

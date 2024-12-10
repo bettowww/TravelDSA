@@ -3,8 +3,8 @@
 // import React, { useState } from "react";
 // import { useRouter } from "next/navigation";
 
+import "../../styles/home.css"; // Importă stilurile CSS
 import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
-import "../../styles/home.css"
 
 const HomePage = () => {
   // const router = useRouter(); // Pentru navigare
@@ -36,11 +36,9 @@ const HomePage = () => {
       </section>
 
       {/* Call to Action Section */}
-      <section className="py-5 bg-light">
-        <div className="custom-container text-center">
-          <h3 className="fw-bold mb-3">
-            Start Your Adventure Today
-          </h3>
+      <section>
+        <div className="container text-center">
+          <h3 className="fw-bold mb-3">Start Your Adventure Today</h3>
           <p className="lead">
             Ready to explore? Join our community of adventurers and start your
             journey now!
