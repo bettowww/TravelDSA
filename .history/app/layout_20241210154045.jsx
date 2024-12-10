@@ -24,6 +24,7 @@ const RootLayout = ({ children }) => {
   return (
     <html lang="en">
       <body>
+
         {/* Meniul global */}
         <div className="menu-dropdown">
         <button className="menu-dropbtn">
