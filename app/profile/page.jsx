@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation"; // Pentru navigare
 import { auth } from "../firebase/config"; // Configurarea Firebase
 import { onAuthStateChanged, signOut } from "firebase/auth"; // Funcția de logout
 // import { doc, getDoc, setDoc } from "firebase/firestore"; // Funcții pentru Firestore
-
+import { getDatabase, ref, set } from "firebase/database";
 
 import "../../styles/profile.css"
 
@@ -14,7 +14,7 @@ const ProfilePage = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  const [successMessage, setSuccessMessage] = useState(""); // Mesajul de succes
   const [profileData, setProfileData] = useState({
     firstName: "",
     lastName: "",
@@ -23,12 +23,17 @@ const ProfilePage = () => {
   });
 
   const router = useRouter();
+  const db = getDatabase(); // Inițializăm Firebase Realtime Database
 
   useEffect(() => {
     // Ascultă modificările stării de autentificare
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       if (currentUser) {
         setUser(currentUser);
+        setProfileData((prevData) => ({
+          ...prevData,
+          email: currentUser.email,
+        }));
       } else {
         setError("No user is signed in.");
         router.push("/auth"); // Redirecționează dacă utilizatorul nu este autentificat
@@ -54,25 +59,38 @@ const ProfilePage = () => {
     setProfileData((prev) => ({ ...prev, [name]: value }));
   };
 
-  /*
-  const handleRoutes 
-  */
-
-    /*
-    // Salvează datele în Firestore
-    const handleSave = async () => {
-    if (user) {
-        try {
-        const userDocRef = doc(db, "users", user.uid);
-        await setDoc(userDocRef, profileData, { merge: true });
-        alert("Profile updated successfully!");
-        } catch (err) {
-        console.error("Error updating profile:", err);
-        alert("Failed to update profile. Please try again.");
-        }
+  const handleSave = async () => {
+    // Verifică dacă toate câmpurile necesare sunt completate
+    if (!profileData.firstName || !profileData.lastName || !profileData.phone) {
+      setError(null); // Afișează mesajul de eroare
+      setSuccessMessage("Your profile cannot be updated!"); // Resetăm mesajul de succes
+      // Setează mesajul de succes să dispară după 3 secunde
+      setTimeout(() => {
+        setSuccessMessage("");
+      }, 3000);
+    } else {
+      try {
+        const userProfileRef = ref(db, 'user_profiles/' + user.uid);
+        await set(userProfileRef, {
+          email: user.email,
+          firstName: profileData.firstName,
+          lastName: profileData.lastName,
+          phone: profileData.phone,
+        });
+        setSuccessMessage("Your profile has been updated!"); // Mesaj de succes
+        setError(null); // Resetăm mesajul de eroare
+  
+        // Setează mesajul de succes să dispară după 3 secunde
+        setTimeout(() => {
+          setSuccessMessage("");
+        }, 3000);
+      } catch (err) {
+          console.error("Error saving profile:", err);
+          setError("Failed to update profile. Please try again.");
+          setSuccessMessage(""); // Resetăm mesajul de succes dacă apare eroare
+      }
     }
-    };
-    */
+  };
 
   if (loading) {
     return <p>Loading...</p>;
@@ -84,6 +102,8 @@ const ProfilePage = () => {
 
   return (
     <div className="container">
+      {/* Mesajul de succes afisat sus */}
+      {successMessage && <div className="toast-message">{successMessage}</div>}
       <div className="profile-picture">
         <img
           src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"
@@ -124,7 +144,7 @@ const ProfilePage = () => {
             value={profileData.email || user.email}
             readOnly
           />
-          <button className="save-button" /*onClick={handleSave}*/>
+          <button className="save-button" onClick={handleSave}>
             Save Profile
           </button>
           <button className="view-routes-button" /*onClick={handleRoutes}*/>
