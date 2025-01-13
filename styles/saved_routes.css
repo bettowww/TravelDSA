@@ -30,7 +30,7 @@
 }
 
 .route-card {
-    background-color: var(--color-gunmetal);
+    background-color: var(--color-white2);
     color: var(--color-white); /* Text alb pe fundal închis */
     border: 1px solid var(--color-border);
     border-radius: 8px;
@@ -47,7 +47,7 @@
 .route-card h3 {
     font-size: 1.25rem;
     margin-bottom: 10px;
-    color: var(--color-robin-egg-blue); /* Text vizibil */
+    color: var(--color-darkblue2); /* Text vizibil */
 }
 
 .route-card p {
@@ -56,7 +56,15 @@
     color: var(--color-white); /* Text alb pentru descriere */
 }
 
-.route-card button {
+.route-actions {
+    display: flex;
+    gap: 10px; /* Spațiu între butoane */
+    justify-content: flex-start; /* Aliniere la stânga */
+}
+
+
+.route-card button,
+.share-button {
     background-color: var(--color-darkblue1);
     color: #fff;
     border: none;
@@ -67,7 +75,8 @@
     max-width: 250px;
 }
 
-.route-card button:hover {
+.route-card button:hover,
+.share-button:hover {
     background-color: var(--color-darkblue2);
 }
 
