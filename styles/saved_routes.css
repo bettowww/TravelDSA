@@ -1,0 +1,88 @@
+.saved-routes-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--color-white2);
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px var(--color-black-transparent);
+    margin: 100px auto;
+    width: 100%;
+    max-width: 800px;
+    box-sizing: border-box;
+}
+
+.saved-routes-container h2 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    color: var(--color-darkblue1); /* Text albastru închis */
+}
+
+.routes-list {
+    width: 100%;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px; /* Spațiu între rute */
+}
+
+.route-card {
+    background-color: var(--color-gunmetal);
+    color: var(--color-white); /* Text alb pe fundal închis */
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 4px var(--color-black-transparent);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.route-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px var(--color-black-transparent);
+}
+
+.route-card h3 {
+    font-size: 1.25rem;
+    margin-bottom: 10px;
+    color: var(--color-robin-egg-blue); /* Text vizibil */
+}
+
+.route-card p {
+    font-size: 1rem;
+    margin-bottom: 20px;
+    color: var(--color-white); /* Text alb pentru descriere */
+}
+
+.route-card button {
+    background-color: var(--color-darkblue1);
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+    max-width: 250px;
+}
+
+.route-card button:hover {
+    background-color: var(--color-darkblue2);
+}
+
+.back-button {
+    margin-top: 20px;
+    background-color: var(--color-darkblue1);
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+    max-width: 250px;
+}
+
+.back-button:hover {
+    background-color: var(--color-darkblue2);
+}

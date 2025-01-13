@@ -1,7 +1,8 @@
 .container {
     display: flex;
-    justify-content: center;
-    align-items: start;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
     background-color: var(--color-white2);
     border-radius: 8px;
     padding: 20px;
@@ -12,9 +13,16 @@
     box-sizing: border-box;
 }
 
+.profile-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centrare pe mijloc */
+    width: 100%;
+}
+
 .profile-picture {
     text-align: center;
-    margin-right: 20px;
+    padding: 20px;
 }
 
 .profile-picture img {
@@ -25,52 +33,49 @@
 
 .profile-settings {
     width: 100%;
+    padding: 20px;
+}
+
+.profile-settings h4 {
+    margin-bottom: 20px;
+}
+
+.display-group {
+    padding-left: 0px; /* Aliniere la stânga */
+}
+
+.profile-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Spațiu între butoane */
+    width: 100%;
+    align-items: flex-start; /* Aliniere la stânga */
+    padding-top: 20px;
 }
 
 .input-group {
     display: flex;
-    flex-direction: column; /* Aliniază elementele pe axa verticală */
-    gap: 8px; /* Spațiu între casete */
-    margin-bottom: 20px; /* Spațiu între grupul de input-uri și butoane */
-}
-  
-.input-group input {
-    width: 100%; /* Asigură-te că input-urile ocupă toată lățimea disponibilă */
-    padding: 10px;
-    font-size: 1rem;
-    border: 1px solid var(--color-white2);
-    border-radius: 4px;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.input-group input:focus {
-    border-color: black; /* Evidențiază bordura la focus */
-    outline: none;
-    box-shadow: 0 0 5px var(--color-black-transparent); /* Glow albastru la focus */
-}
-
-.profile-settings h4 {
-    font-size: 1.25rem;
-    margin-bottom: 10px;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
 }
 
 .view-routes-button,
-.save-button,
-.edit-button {
+.edit-button,
+.save-button {
     background-color: var(--color-darkblue1);
     color: #fff;
     border: none;
     padding: 10px 20px;
     border-radius: 4px;
     cursor: pointer;
-    width: 400px; /* Ocupă întreaga lățime disponibilă în container */
-    margin-top: 10px;
-    box-sizing: border-box; /* Include padding și border în dimensiune */
+    width: 100%;
+    max-width: 250px;
 }
 
 .view-routes-button:hover,
-.save-button:hover,
-.edit-button:hover {
+.edit-button:hover,
+.save-button:hover {
     background-color: var(--color-darkblue2);
 }
 
@@ -86,16 +91,6 @@
     cursor: pointer;
 }
 
-/* .edit-button {
-    background-color: var(--color-darkblue1);
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-top: 10px;
+.logout-button:hover {
+    background-color: #dd7d72;
 }
-  
-.edit-button:hover {
-    background-color: var(--color-darkblue2);
-} */
