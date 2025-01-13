@@ -1,0 +1,149 @@
+"use client";
+
+import React, { useEffect, useRef } from "react";
+import esriConfig from "@arcgis/core/config.js";
+import Map from "@arcgis/core/Map.js";
+import MapView from "@arcgis/core/views/MapView.js";
+import FeatureLayer from "@arcgis/core/layers/FeatureLayer.js";
+import GeoJSONLayer from "@arcgis/core/layers/GeoJSONLayer.js";
+
+
+const MapComponent = ({ selectedLayer }) => {
+  const mapRef = useRef(null);
+
+  useEffect(() => {
+    // Configurare API Key
+    esriConfig.apiKey =
+      "AAPTxy8BH1VEsoebNVZXo8HurA68jFcPXz-dC0bjRMxYCtOcFXikjbCIslC1pYzC4PnuBx9o1IKmNwKh6jhMI_gDo3fEzuUQOlsOfPNou5BEHTfW4wPvKgNaXtY4JTU0BndU-7d0K_l77KD2QxGVRl8NxYvv8kcmvQtXbw8amy8q1Ydvl2gk5iXNxO_h_JNid9t6CINTjtjsHvkxXsc_VoajW5fRhH9kX6zN9V0644k1Ydxq88_UX5X-Af7f6SW86alWAT1_AaAKiXG1";
+
+    console.log("Configurare cheie API completată:", esriConfig.apiKey);
+
+    const initializeMap = async () => {
+      try {
+        // Creează harta
+        const map = new Map({
+          basemap: "streets-vector", // Basemap-ul utilizat
+        });
+
+        console.log("Harta a fost creată:", map);
+
+        // Creează vizualizarea hărții
+        const view = new MapView({
+          container: mapRef.current,
+          map: map,
+          center: [25.276987, 45.943161], // Centrul României
+          zoom: 6, // Nivelul de zoom inițial
+        });
+
+        console.log("Vizualizarea hărții a fost creată:", view);
+
+
+        // Așteaptă încărcarea completă a vizualizării
+        view.when(() => {
+          console.log("MapView încărcat cu succes!");
+        }).catch((error) => {
+          console.error("Eroare la încărcarea MapView:", error);
+        });
+
+        // Layer GeoJSON pentru regiunile României
+        const regionLayer = new GeoJSONLayer({
+            url: "regiuni_romania.geojson", // Asigură-te că fișierul este în `public/geojson/`
+            title: "Regiuni România",
+            renderer: {
+              type: "simple",
+              symbol: {
+                type: "simple-fill",
+                color: [0, 255, 0, 0.2], // Alb transparent
+                outline: {
+                  color: [0, 100, 0], // Verde mai închis pentru contur
+                  width: 1,
+                },
+              },
+            },
+            labelingInfo: [
+              {
+                labelExpressionInfo: { expression: `'Experiența ' + $feature.name` },
+                symbol: {
+                  type: "text",
+                  color: "black",
+                  haloColor: "white",
+                  haloSize: "2px",
+                  font: {
+                    size: 12,
+                    weight: "bold",
+                  },
+                },
+                labelPlacement: "always-horizontal",
+              },
+            ],
+          });
+  
+          map.add(regionLayer);
+
+        // Adaugă layerul tematic selectat (daca a fost selectat)
+        let thematicLayer;
+        if (selectedLayer?.url) {
+          thematicLayer = new FeatureLayer({
+            url: selectedLayer.url,
+            renderer: selectedLayer.renderer,
+          });
+          map.add(thematicLayer);
+        }
+  
+        // Detectare click pe regiune
+        view.on("click", async (event) => {
+          const response = await view.hitTest(event);
+          const graphic = response.results.find((res) => res.layer === regionLayer)?.graphic;
+  
+          if (graphic) {
+            const regionName = graphic.attributes.name; // Numele regiunii selectate
+            console.log(`Regiunea selectată: ${regionName}`);
+            map.remove(regionLayer); // Elimină layer-ul regiunilor
+  
+            if (thematicLayer) {
+              // Aplică filtrarea layer-ului tematic
+              filterLayerByRegion(thematicLayer, graphic.geometry);
+            }
+          }
+        });
+  
+        return () => {
+          view.destroy();
+        };
+      };
+  
+      const filterLayerByRegion = (layer, regionGeometry) => {
+        const query = new Query();
+        query.geometry = regionGeometry; // Filtrare pe baza geometriei regiunii
+        query.spatialRelationship = "intersects"; // Intersecție cu regiunea selectată
+        query.returnGeometry = true;
+        query.outFields = ["*"];
+  
+        layer.definitionExpression = ""; // Resetează orice filtru anterior
+  
+        layer.queryFeatures(query).then((results) => {
+          if (results.features.length > 0) {
+            console.log(`S-au găsit ${results.features.length} locații în regiunea selectată.`);
+          } else {
+            console.warn("Nu au fost găsite locații în regiunea selectată.");
+          }
+        }).catch((error) => {
+          console.error("Eroare la filtrarea layer-ului:", error);
+        });
+      };
+  
+      if (typeof window !== "undefined") {
+        initializeMap();
+      }
+  
+      return () => {
+        if (mapRef.current) {
+          mapRef.current.innerHTML = "";
+        }
+      };
+    }, [selectedLayer]);
+  
+    return <div ref={mapRef} style={{ width: "100%", height: "100%" }} />;
+  };
+  
+  export default MapComponent;

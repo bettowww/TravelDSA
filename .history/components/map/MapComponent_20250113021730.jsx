@@ -6,8 +6,6 @@ import Map from "@arcgis/core/Map.js";
 import MapView from "@arcgis/core/views/MapView.js";
 import FeatureLayer from "@arcgis/core/layers/FeatureLayer.js";
 import GeoJSONLayer from "@arcgis/core/layers/GeoJSONLayer.js";
-import Query from "@arcgis/core/rest/support/Query.js"; // Pentru interogări
-
 
 
 const MapComponent = ({ selectedLayer }) => {
@@ -50,14 +48,14 @@ const MapComponent = ({ selectedLayer }) => {
         // Layer GeoJSON pentru regiunile României
         const regionLayer = new GeoJSONLayer({
             url: "regiuni_romania.geojson", // Asigură-te că fișierul este în `public/geojson/`
-            title: "regiuni_romania",
+            title: "Regiuni România",
             renderer: {
               type: "simple",
               symbol: {
                 type: "simple-fill",
-                color: [0, 255, 0, 0.2], // Alb transparent
+                color: [255, 255, 255, 0.1], // Alb transparent
                 outline: {
-                  color: [0, 100, 0], // Verde mai închis pentru contur
+                  color: [0, 0, 0],
                   width: 1,
                 },
               },
@@ -82,39 +80,24 @@ const MapComponent = ({ selectedLayer }) => {
   
           map.add(regionLayer);
 
-        // Adaugă layerul tematic selectat (daca a fost selectat)
+        // Adaugă un FeatureLayer dacă există
         if (selectedLayer?.url) {
           console.log("Încerc să adaug layer-ul:", selectedLayer);
 
-          const thematicLayer  = new FeatureLayer({
+          const layer = new FeatureLayer({
             url: selectedLayer.url,
             renderer: selectedLayer.renderer,
           });
 
           // Verifică dacă layer-ul este valid
-          thematicLayer.when(() => {
-            console.log("Layer încărcat cu succes:", thematicLayer);
+          layer.when(() => {
+            console.log("Layer încărcat cu succes:", layer);
           }).catch((error) => {
             console.error("Eroare la încărcarea layer-ului:", error);
           });
 
-          map.add(thematicLayer);
+          map.add(layer);
         }
-
-        // Detectare click pe regiune
-        view.on("click", async (event) => {
-            const response = await view.hitTest(event);
-            const graphic = response.results.find((res) => res.layer === regionLayer)?.graphic;
-  
-            if (graphic) {
-                const regionName = graphic.attributes.name;
-                console.log(`Regiunea selectată: ${regionName}`);
-                handleRegionSelection(regionName, graphic.geometry, map);
-              } else {
-                console.log("Nu ai selectat o regiune.");
-              }
-          });
-
       } catch (error) {
         console.error("Eroare la inițializarea hărții:", error);
       }
@@ -123,6 +106,8 @@ const MapComponent = ({ selectedLayer }) => {
     if (typeof window !== "undefined") {
       console.log("Inițializarea hărții pe client...");
       initializeMap();
+    } else {
+      console.warn("Componenta încearcă să se execute pe server, dar a fost blocată.");
     }
 
     // Curăță resursele la demontarea componentei
@@ -137,61 +122,10 @@ const MapComponent = ({ selectedLayer }) => {
   return <div ref={mapRef} style={{ width: "100%", height: "100%" }} />;
 };
 
-
-// Funcție care gestionează selecția regiunii
-const handleRegionSelection = async (regionName, regionGeometry, map) => {
-    alert(`Ai selectat regiunea: ${regionName}`);
-  
-    // Elimină layer-ul regiunilor
-    const regionLayer = map.layers.find((layer) => layer.title == "regiuni_romania");
-    if (regionLayer) {
-    //   alert("deleting region layer");
-      map.remove(regionLayer);
-    }
-  
-    // Filtrează layer-ul tematic (dacă există)
-    const thematicLayer = map.layers.find((layer) => layer.title !== "regiuni_romania");
-    
-  
-    if (thematicLayer) {
-    //   alert("found thematic layer");
-      const query = new Query();
-      query.geometry = regionGeometry; // Folosește geometria regiunii pentru filtrare
-      query.spatialRelationship = "intersects"; // Doar punctele care se intersectează cu regiunea
-      query.returnGeometry = true;
-      query.outFields = ["*"];
-      query.geometry.spatialReference = thematicLayer.spatialReference;
-
-      
-      
-
-  
-      // thematicLayer.definitionExpression = ""; // Resetare filtru anterior
-      try {
-        const results = await thematicLayer.queryFeatures(query);
-        results.features.forEach((feature, index) => {
-            console.log(`Atributele locației ${index + 1}:`, feature.attributes);
-          });
-
-        if (results.features.length > 0) {
-          console.log(`S-au găsit ${results.features.length} locații în regiunea selectată.`);
-
-          // Construiește un filtru pe baza ID-urilor locațiilor găsite
-          const objectIds = results.features.map((feature) => feature.attributes.ObjectId);
-          console.log("Lista ID-urilor:", objectIds);
-          
-          thematicLayer.definitionExpression = `OBJECTID IN (${objectIds.join(",")})`; // Afișează doar punctele din regiune
-          
-        } else {
-          console.warn("Nu au fost găsite locații în regiunea selectată.");
-          thematicLayer.definitionExpression = "1=0"; // Ascunde toate punctele dacă nu sunt rezultate
-        }
-      } catch (error) {
-        console.error("Eroare la filtrarea layer-ului tematic:", error);
-      }
-    } else {
-      console.warn("Nu există layer tematic de filtrat.");
-    }
+const handleRegionSelection = (regionName) => {
+    alert(`Experiența selectată: ${regionName}`);
+    // Aici poți seta filtrarea layer-ului de puncte (e.g., restaurante) pentru regiunea selectată
   };
-  
-  export default MapComponent;
+
+
+export default MapComponent;

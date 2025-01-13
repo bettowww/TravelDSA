@@ -175,13 +175,13 @@ const handleRegionSelection = async (regionName, regionGeometry, map) => {
 
         if (results.features.length > 0) {
           console.log(`S-au găsit ${results.features.length} locații în regiunea selectată.`);
-
+        return;
           // Construiește un filtru pe baza ID-urilor locațiilor găsite
-          const objectIds = results.features.map((feature) => feature.attributes.ObjectId);
+          const objectIds = results.features.map((feature) => feature.attributes.OBJECTID || feature.attributes.FID || feature.attributes.id);
           console.log("Lista ID-urilor:", objectIds);
+
           
           thematicLayer.definitionExpression = `OBJECTID IN (${objectIds.join(",")})`; // Afișează doar punctele din regiune
-          
         } else {
           console.warn("Nu au fost găsite locații în regiunea selectată.");
           thematicLayer.definitionExpression = "1=0"; // Ascunde toate punctele dacă nu sunt rezultate

@@ -1,0 +1,22 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+      {
+        "type": "Feature",
+        "properties": { "name": "Experiența moldovenească" },
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [[[27.5, 47.5], [28.5, 47.5], [28.5, 46.5], [27.5, 46.5], [27.5, 47.5]]]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": { "name": "Experiența muntenească" },
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [[[24.0, 45.5], [26.0, 45.5], [26.0, 44.0], [24.0, 44.0], [24.0, 45.5]]]
+        }
+      }
+    ]
+  }
+  

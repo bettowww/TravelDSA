@@ -179,9 +179,9 @@ const handleRegionSelection = async (regionName, regionGeometry, map) => {
           // Construiește un filtru pe baza ID-urilor locațiilor găsite
           const objectIds = results.features.map((feature) => feature.attributes.ObjectId);
           console.log("Lista ID-urilor:", objectIds);
+
           
           thematicLayer.definitionExpression = `OBJECTID IN (${objectIds.join(",")})`; // Afișează doar punctele din regiune
-          
         } else {
           console.warn("Nu au fost găsite locații în regiunea selectată.");
           thematicLayer.definitionExpression = "1=0"; // Ascunde toate punctele dacă nu sunt rezultate
