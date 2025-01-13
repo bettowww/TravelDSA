@@ -113,7 +113,7 @@ const ProfilePage = () => {
 
     
     return (
-        <div className="container">
+        <div className="profile-container">
             <div className="profile-header">
                 <div className="profile-picture">
                     <img
