@@ -111,11 +111,11 @@ input:focus, select:focus, textarea:focus {
     box-shadow: 0 0 5px var(--color-lightblue1);
 }
 
-/* Erori */
+/* Mesaje de eroare */
 .error-message {
     color: var(--color-error);
-    font-size: 0.9rem;
-    margin-top: -5px;
+    font-size: 1rem;
+    margin-top: 5px;
     text-align: center;
 }
 
@@ -123,8 +123,7 @@ input:focus, select:focus, textarea:focus {
 .success-message {
     color: var(--color-success);
     font-size: 1rem;
-    font-weight: bold;
-    margin: 10px 0;
+    margin-top: 5px;
     text-align: center;
 }
 

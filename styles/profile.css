@@ -55,7 +55,8 @@
 }
 
 .view-routes-button,
-.save-button {
+.save-button,
+.edit-button {
     background-color: var(--color-darkblue1);
     color: #fff;
     border: none;
@@ -68,7 +69,8 @@
 }
 
 .view-routes-button:hover,
-.save-button:hover {
+.save-button:hover,
+.edit-button:hover {
     background-color: var(--color-darkblue2);
 }
 
@@ -83,3 +85,17 @@
     border-radius: 4px;
     cursor: pointer;
 }
+
+/* .edit-button {
+    background-color: var(--color-darkblue1);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+  
+.edit-button:hover {
+    background-color: var(--color-darkblue2);
+} */
