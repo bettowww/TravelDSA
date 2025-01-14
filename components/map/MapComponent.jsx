@@ -13,8 +13,10 @@ import SelectedPointsList from "./SelectedPointsList";
 
 
 const MapComponent = ({ selectedLayer }) => {
-  const mapRef = useRef(null);
-  const [selectedPoints, setSelectedPoints] = useState([]);
+    const mapRef = useRef(null);
+    const [selectedPoints, setSelectedPoints] = useState([]);
+    const [isMapBlocked, setIsMapBlocked] = useState(true); // Harta blocată inițial
+    const [instruction, setInstruction] = useState("Vă rugăm să selectați o tema pentru vacanța!");
 
   useEffect(() => {
     setSelectedPoints([]);
@@ -50,7 +52,6 @@ const MapComponent = ({ selectedLayer }) => {
 
         console.log("Vizualizarea hărții a fost creată:", view);
 
-
         // Așteaptă încărcarea completă a vizualizării
         view.when(() => {
           console.log("MapView încărcat cu succes!");
@@ -75,7 +76,7 @@ const MapComponent = ({ selectedLayer }) => {
             },
             labelingInfo: [
               {
-                labelExpressionInfo: { expression: `'Experiența ' + $feature.name` },
+                labelExpressionInfo: { expression: `'Vacanta in ' + $feature.name` },
                 symbol: {
                   type: "text",
                   color: "black",
@@ -105,6 +106,8 @@ const MapComponent = ({ selectedLayer }) => {
 
           thematicLayer.when(() => {
             console.log("Layer încărcat cu succes:", thematicLayer);
+            setIsMapBlocked(false); // Deblochează harta după selectarea tematicii
+            setInstruction("Selectați o regiune de pe hartă");
           }).catch((error) => {
             console.error("Eroare la încărcarea layer-ului:", error);
           });
@@ -113,11 +116,20 @@ const MapComponent = ({ selectedLayer }) => {
 
           // Detectare click pe layerul tematic pentru popup
           view.on("click", async (event) => {
+            // if (isMapBlocked) {
+            //     alert("Selectați mai întâi o tematică.");
+            //     return;
+            // }
+
             const response = await view.hitTest(event);
 
             const graphic = response.results.find(
               (res) => res.graphic?.layer?.id === thematicLayer.id
             )?.graphic;
+
+            if (graphic) {
+                setInstruction(""); // Ascunde instrucțiunea după selecție
+            }
             
             if (graphic && graphic.attributes) {
               const newPoint = {
@@ -183,6 +195,12 @@ const MapComponent = ({ selectedLayer }) => {
   return (
     <div className="map-page-container">
       <div className="map-content-container">
+        {/* 🗺️ Overlay pentru blocare */}
+        {isMapBlocked && (
+                    <div className="map-overlay">
+                        <p className="map-instruction">{instruction}</p>
+                    </div>
+        )}
         {/* 🗺️ Harta */}
         <div ref={mapRef} className="map-container" />
 
@@ -206,8 +224,7 @@ const handleRegionSelection = async (regionName, regionGeometry, map) => {
         return;
     }
     else {
-        alert(`Ai selectat regiunea: ${regionName}`);
-        alert(`Tematica: ${thematicLayer.title}`);
+        alert(`Ai selectat regiunea: ${regionName} si tematica: ${thematicLayer.title}`);
     }
 
     // Elimină layer-ul regiunilor

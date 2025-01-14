@@ -14,7 +14,7 @@ const LayerSelector = ({ layers, selectedLayer, onSelectLayer }) => {
       <FormControl
         variant="outlined"
         sx={{
-          minWidth: 300,
+          minWidth: 250,
           backgroundColor: "var(--color-darkblue1)",
           borderRadius: "4px",
           boxShadow: "0 4px 8px var(--color-black-transparent)",
@@ -31,7 +31,7 @@ const LayerSelector = ({ layers, selectedLayer, onSelectLayer }) => {
             },
           }}
         >
-          Layer
+          Tema
         </InputLabel>
         <Select
           value={selectedLayer ? selectedLayer.name : ""}

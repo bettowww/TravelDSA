@@ -6,28 +6,28 @@ const useLayers = () => {
 
   const layers = [
     {
-      name: "Restaurante",
+      name: "Gastronomie",
       url: "https://services8.arcgis.com/BBQ8y8wlr7sbDPZa/arcgis/rest/services/restaurante_bune_romania/FeatureServer",
       renderer: restaurantsRenderer, 
     },
     {
-      name: "Muzee",
+      name: "Istorie",
       url: "https://services8.arcgis.com/BBQ8y8wlr7sbDPZa/arcgis/rest/services/muzee_romania/FeatureServer",
       renderer: muzeumsRenderer,
     },
     {
-      name: "Manastiri",
+      name: "Religie",
       url:"https://services3.arcgis.com/087BfB5SU06CcLqR/arcgis/rest/services/Manastiri_Romania/FeatureServer",
       apiKey: process.env.REACT_APP_ARCGIS_API_KEY,
       renderer: manastiriRenderer,
     },
     {
-      name: "Atractii Naturale",
+      name: "Natura",
       url: "https://services8.arcgis.com/BBQ8y8wlr7sbDPZa/arcgis/rest/services/atractii_naturale/FeatureServer",
       renderer: atractiiRenderer,
     },
     {
-      name: "Cladiri Faimoase",
+      name: "Cultura",
       url: "https://services8.arcgis.com/BBQ8y8wlr7sbDPZa/arcgis/rest/services/cladiri_faimoase_romania/FeatureServer",
       renderer: cladiriRenderer,
     },
