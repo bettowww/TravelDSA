@@ -6,11 +6,11 @@ import Map from "@arcgis/core/Map.js";
 import MapView from "@arcgis/core/views/MapView.js";
 import FeatureLayer from "@arcgis/core/layers/FeatureLayer.js";
 import GeoJSONLayer from "@arcgis/core/layers/GeoJSONLayer.js";
-import Query from "@arcgis/core/rest/support/Query.js"; // Pentru interogări
+import Query from "@arcgis/core/rest/support/Query.js";
+import Graphic from "@arcgis/core/Graphic.js";
 
 import "../../styles/map.css";
 import SelectedPointsList from "./SelectedPointsList";
-
 
 const MapComponent = ({ selectedLayer }) => {
     const mapRef = useRef(null);
@@ -18,230 +18,174 @@ const MapComponent = ({ selectedLayer }) => {
     const [isMapBlocked, setIsMapBlocked] = useState(true); // Harta blocată inițial
     const [instruction, setInstruction] = useState("Vă rugăm să selectați o tema pentru vacanța!");
 
-  useEffect(() => {
-    setSelectedPoints([]);
-    // Configurare API Key
-    esriConfig.apiKey =
-      "AAPTxy8BH1VEsoebNVZXo8HurA68jFcPXz-dC0bjRMxYCtOcFXikjbCIslC1pYzC4PnuBx9o1IKmNwKh6jhMI_gDo3fEzuUQOlsOfPNou5BEHTfW4wPvKgNaXtY4JTU0BndU-7d0K_l77KD2QxGVRl8NxYvv8kcmvQtXbw8amy8q1Ydvl2gk5iXNxO_h_JNid9t6CINTjtjsHvkxXsc_VoajW5fRhH9kX6zN9V0644k1Ydxq88_UX5X-Af7f6SW86alWAT1_AaAKiXG1";
+    useEffect(() => {
+        setSelectedPoints([]);
+        esriConfig.apiKey = "AAPTxy8BH1VEsoebNVZXo8HurA68jFcPXz-dC0bjRMxYCtOcFXikjbCIslC1pYzC4PnuBx9o1IKmNwKh6jhMI_gDo3fEzuUQOlsOfPNou5BEHTfW4wPvKgNaXtY4JTU0BndU-7d0K_l77KD2QxGVRl8NxYvv8kcmvQtXbw8amy8q1Ydvl2gk5iXNxO_h_JNid9t6CINTjtjsHvkxXsc_VoajW5fRhH9kX6zN9V0644k1Ydxq88_UX5X-Af7f6SW86alWAT1_AaAKiXG1";
+        console.log("Configurare cheie API completată:", esriConfig.apiKey);
 
-    console.log("Configurare cheie API completată:", esriConfig.apiKey);
+        const initializeMap = async () => {
+            try {
+                const map = createMap();
+                const view = createMapView(map);
 
-    const initializeMap = async () => {
-      try {
-        // Creează harta
-        const map = new Map({
-          basemap: "streets-vector", // Basemap-ul utilizat
+                const regionLayer = createRegionLayer(map);
+                map.add(regionLayer);
+
+                if (selectedLayer?.url) {
+                    const thematicLayer = createThematicLayer(map, view, selectedLayer);
+                    map.add(thematicLayer);
+                    handleThematicLayerClick(view, thematicLayer);
+                }
+
+                view.when(() => console.log("MapView încărcat cu succes!"));
+                handleRegionLayerClick(view, regionLayer, map);
+            } catch (error) {
+                console.error("Eroare la inițializarea hărții:", error);
+            }
+        };
+
+        if (typeof window !== "undefined") {
+            console.log("Inițializarea hărții pe client...");
+            initializeMap();
+        }
+
+        return () => {
+            console.log("Curățare resurse MapView...");
+            if (mapRef.current) {
+                mapRef.current.innerHTML = "";
+            }
+        };
+    }, [selectedLayer]);
+
+    const createMap = () => {
+        return new Map({
+            basemap: "streets-vector",
         });
+    };
 
-        console.log("Harta a fost creată:", map);
-
-        // Creează vizualizarea hărții
-        const view = new MapView({
-          container: mapRef.current,
-          map: map,
-          center: [25.276987, 45.943161],
-          zoom: 6,
-          popup: {
-            dockEnabled: false,
-            dockOptions: {
-              buttonEnabled: true,
-              breakpoint: false,
+    const createMapView = (map) => {
+        return new MapView({
+            container: mapRef.current,
+            map: map,
+            center: [25.276987, 45.943161],
+            zoom: 6,
+            popup: {
+                dockEnabled: false,
+                dockOptions: { buttonEnabled: true, breakpoint: false },
             },
-          },
         });
+    };
 
-        console.log("Vizualizarea hărții a fost creată:", view);
-
-        // Așteaptă încărcarea completă a vizualizării
-        view.when(() => {
-          console.log("MapView încărcat cu succes!");
-        }).catch((error) => {
-          console.error("Eroare la încărcarea MapView:", error);
-        });
-
-        // Layer GeoJSON pentru regiunile României
-        const regionLayer = new GeoJSONLayer({
-            url: "regiuni_romania.geojson", // Asigură-te că fișierul este în `public/geojson/`
+    const createRegionLayer = (map) => {
+        return new GeoJSONLayer({
+            url: "regiuni_romania.geojson",
             title: "regiuni_romania",
             renderer: {
-              type: "simple",
-              symbol: {
-                type: "simple-fill",
-                color: [0, 255, 0, 0.2], // Alb transparent
-                outline: {
-                  color: [0, 100, 0], // Verde mai închis pentru contur
-                  width: 1,
+                type: "simple",
+                symbol: {
+                    type: "simple-fill",
+                    color: [0, 255, 0, 0.2],
+                    outline: { color: [0, 100, 0], width: 1 },
                 },
-              },
             },
             labelingInfo: [
-              {
-                labelExpressionInfo: { expression: `'Vacanta in ' + $feature.name` },
-                symbol: {
-                  type: "text",
-                  color: "black",
-                  haloColor: "white",
-                  haloSize: "2px",
-                  font: {
-                    size: 12,
-                    weight: "bold",
-                  },
+                {
+                    labelExpressionInfo: { expression: `'Vacanta in ' + $feature.name` },
+                    symbol: {
+                        type: "text",
+                        color: "black",
+                        haloColor: "white",
+                        haloSize: "2px",
+                        font: { size: 12, weight: "bold" },
+                    },
+                    labelPlacement: "always-horizontal",
                 },
-                labelPlacement: "always-horizontal",
-              },
             ],
-          });
-  
-          map.add(regionLayer);
+        });
+    };
 
-        // Adaugă layerul tematic selectat (daca a fost selectat)
-        if (selectedLayer?.url) {
-          console.log("Încerc să adaug layer-ul:", selectedLayer);
-
-          const thematicLayer = new FeatureLayer({
+    const createThematicLayer = (map, view, selectedLayer) => {
+        const thematicLayer = new FeatureLayer({
             url: selectedLayer.url,
             renderer: selectedLayer.renderer,
-            outFields: ["*"]
-          });
+            outFields: ["*"],
+        });
 
-          thematicLayer.when(() => {
+        thematicLayer.when(() => {
             console.log("Layer încărcat cu succes:", thematicLayer);
-            setIsMapBlocked(false); // Deblochează harta după selectarea tematicii
+            setIsMapBlocked(false);
             setInstruction("Selectați o regiune de pe hartă");
-          }).catch((error) => {
+        }).catch((error) => {
             console.error("Eroare la încărcarea layer-ului:", error);
-          });
+        });
 
-          map.add(thematicLayer);
+        return thematicLayer;
+    };
 
-          // Detectare click pe layerul tematic pentru popup
-          view.on("click", async (event) => {
-            // if (isMapBlocked) {
-            //     alert("Selectați mai întâi o tematică.");
-            //     return;
-            // }
-
+    const handleThematicLayerClick = (view, thematicLayer) => {
+        view.on("click", async (event) => {
             const response = await view.hitTest(event);
-
             const graphic = response.results.find(
-              (res) => res.graphic?.layer?.id === thematicLayer.id
+                (res) => res.graphic?.layer?.id === thematicLayer.id
             )?.graphic;
 
             if (graphic) {
-                setInstruction(""); // Ascunde instrucțiunea după selecție
+                setInstruction("");
+                handleFeatureClick(graphic);
             }
-            
-            if (graphic && graphic.attributes) {
-              const newPoint = {
-                id: graphic.attributes.OBJECTID || graphic.attributes.id || Date.now(),  // Asigură un ID unic
-                name: graphic.attributes.name || "Fără titlu",
-                address: graphic.attributes.formatted_address || "Adresă necunoscută",
-                rating: graphic.attributes.rating || "N/A",
-                url: graphic.attributes.url || "#"
-              };
-            
-              // Verificare pentru a evita dublarea punctelor
-              setSelectedPoints((prevPoints) => {
-                const isDuplicate = prevPoints.some(point => point.id === newPoint.id);
-                if (!isDuplicate) {
-                  const updatedPoints = [...prevPoints, newPoint];
-                  console.log("Lista actualizată:", updatedPoints);
-                  return updatedPoints;
-                } else {
-                  console.log("Punctul există deja în listă.");
-                  return prevPoints;
-                }
-              });
-            } else {
-              console.log("Niciun punct detectat.");
-            }
-          });
-        }
+        });
+    };
 
-        // Detectare click pe regiune
+    const handleFeatureClick = (graphic) => {
+        const newPoint = {
+            id: graphic.attributes.OBJECTID || graphic.attributes.id || Date.now(),
+            name: graphic.attributes.name || "Fără titlu",
+            address: graphic.attributes.formatted_address || "Adresă necunoscută",
+            rating: graphic.attributes.rating || "N/A",
+            url: graphic.attributes.url || "#",
+            geometry: graphic.geometry || NULL
+        };
+
+        setSelectedPoints((prevPoints) => {
+            const isDuplicate = prevPoints.some((point) => point.name === newPoint.name);
+            return isDuplicate ? prevPoints : [...prevPoints, newPoint];
+        });
+    };
+
+    const handleRegionLayerClick = (view, regionLayer, map) => {
         view.on("click", async (event) => {
             const response = await view.hitTest(event);
             const graphic = response.results.find((res) => res.layer === regionLayer)?.graphic;
-  
+
             if (graphic) {
                 const regionName = graphic.attributes.name;
                 console.log(`Regiunea selectată: ${regionName}`);
                 handleRegionSelection(regionName, graphic.geometry, map);
-              } else {
-                console.log("Nu ai selectat o regiune.");
-              }
-          });
-          
-
-      } catch (error) {
-        console.error("Eroare la inițializarea hărții:", error);
-      }
+            }
+        });
     };
 
-    if (typeof window !== "undefined") {
-      console.log("Inițializarea hărții pe client...");
-      initializeMap();
-    }
+    const handleRegionSelection = async (regionName, regionGeometry, map) => {
+        const thematicLayer = map.layers.find((layer) => layer.title !== "regiuni_romania");
+        if (!thematicLayer) {
+            alert(`Intai selecteaza o tematica!`);
+            return;
+        }
 
-    // Curăță resursele la demontarea componentei
-    return () => {
-      console.log("Curățare resurse MapView...");
-      if (mapRef.current) {
-        mapRef.current.innerHTML = ""; // Golirea containerului pentru hartă
-      }
-    };
-  }, [selectedLayer]);
-
-  return (
-    <div className="map-page-container">
-      <div className="map-content-container">
-        {/* 🗺️ Overlay pentru blocare */}
-        {isMapBlocked && (
-                    <div className="map-overlay">
-                        <p className="map-instruction">{instruction}</p>
-                    </div>
-        )}
-        {/* 🗺️ Harta */}
-        <div ref={mapRef} className="map-container" />
-
-        {/* 📋 Lista de puncte */}
-        <SelectedPointsList
-          selectedPoints={selectedPoints}
-          onReset={() => setSelectedPoints([])}
-        />
-      </div>
-    </div>
-  );
-};
-
-
-// Funcție care gestionează selecția regiunii
-const handleRegionSelection = async (regionName, regionGeometry, map) => {
-    // Filtrează layer-ul tematic (dacă există)
-    const thematicLayer = map.layers.find((layer) => layer.title !== "regiuni_romania");
-    if (thematicLayer == null) {
-        alert(`Intai selecteaza o tematica!`);
-        return;
-    }
-    else {
         alert(`Ai selectat regiunea: ${regionName} si tematica: ${thematicLayer.title}`);
-    }
 
-    // Elimină layer-ul regiunilor
-    const regionLayer = map.layers.find((layer) => layer.title == "regiuni_romania");
-    if (regionLayer) {
-      map.remove(regionLayer);
-    }
+        const regionLayer = map.layers.find((layer) => layer.title === "regiuni_romania");
+        if (regionLayer) {
+            map.remove(regionLayer);
+        }
 
-    if (thematicLayer != null) {
         const query = new Query();
-        query.geometry = regionGeometry; // Folosește geometria regiunii pentru filtrare
-        query.spatialRelationship = "intersects"; // Doar punctele care se intersectează cu regiunea
+        query.geometry = regionGeometry;
+        query.spatialRelationship = "intersects";
         query.returnGeometry = true;
         query.outFields = ["*"];
         query.geometry.spatialReference = thematicLayer.spatialReference;
 
-        // thematicLayer.definitionExpression = ""; // Resetare filtru anterior
         try {
             const results = await thematicLayer.queryFeatures(query);
             results.features.forEach((feature, index) => {
@@ -249,24 +193,67 @@ const handleRegionSelection = async (regionName, regionGeometry, map) => {
             });
 
             if (results.features.length > 0) {
-            console.log(`S-au găsit ${results.features.length} locații în regiunea selectată.`);
-
-            // Construiește un filtru pe baza ID-urilor locațiilor găsite
-            const objectIds = results.features.map((feature) => feature.attributes.ObjectId);
-            console.log("Lista ID-urilor:", objectIds);
-            
-            thematicLayer.definitionExpression = `OBJECTID IN (${objectIds.join(",")})`; // Afișează doar punctele din regiune
-            
+                const objectIds = results.features.map((feature) => feature.attributes.ObjectId);
+                console.log("Lista ID-urilor:", objectIds);
+                thematicLayer.definitionExpression = `OBJECTID IN (${objectIds.join(",")})`;
             } else {
-            console.warn("Nu au fost găsite locații în regiunea selectată.");
-            thematicLayer.definitionExpression = "1=0"; // Ascunde toate punctele dacă nu sunt rezultate
+                console.warn("Nu au fost găsite locații în regiunea selectată.");
+                thematicLayer.definitionExpression = "1=0";
             }
         } catch (error) {
             console.error("Eroare la filtrarea layer-ului tematic:", error);
         }
-    } else {
-        alert(`Intai selecteaza o tematica!`);
-    }
-  };
-  
-  export default MapComponent;
+    };
+
+    const calculateRoute = async () => {
+        if (selectedPoints.length < 2) {
+            alert("Trebuie să selectați cel puțin două puncte pentru a calcula o rută.");
+            return;
+        }
+    
+        console.log("Puncte selectate:", selectedPoints); // Afișează lista de puncte selectate în consolă
+        // return;
+        const stops = selectedPoints.map((point) => `${point.geometry.x},${point.geometry.y}`).join(";");
+        const apiKey = esriConfig.apiKey;
+        const routeUrl = `https://route.arcgis.com/arcgis/rest/services/World/Route/NAServer/Route_World/solve`;
+
+        console.log("Ruta:", stops); // Afișează lista de puncte selectate în consolă
+    
+        try {
+            const response = await fetch(`${routeUrl}?stops=${stops}&f=json&token=${apiKey}`);
+            const data = await response.json();
+            if (data.routes) {
+                alert("Ruta a fost calculată cu succes!");
+            } else {
+                alert("Nu s-a putut calcula ruta.");
+            }
+        } catch (error) {
+            console.error("Eroare la calcularea rutei:", error);
+        }
+    };
+    
+
+    return (
+        <div className="map-page-container">
+            <div className="map-content-container">
+                {isMapBlocked && (
+                    <div className="map-overlay">
+                        <p className="map-instruction">{instruction}</p>
+                    </div>
+                )}
+                <div ref={mapRef} className="map-container" />
+                <SelectedPointsList selectedPoints={selectedPoints} onReset={() => setSelectedPoints([])} />
+                <button 
+                    className="calculate-route-btn" 
+                    onClick={calculateRoute} 
+                    disabled={selectedPoints.length < 2}
+                >
+                    Calculează Ruta
+                </button>
+
+            </div>
+        </div>
+    );
+};
+
+export default MapComponent;
