@@ -1,0 +1,34 @@
+[33m9e56ede[m[33m ([m[1;36mHEAD -> [m[1;32mbetto[m[33m, [m[1;31morigin/diana[m[33m)[m HEAD@{0}: reset: moving to origin/diana
+[33m87052c8[m[33m ([m[1;31morigin/betto[m[33m)[m HEAD@{1}: checkout: moving from diana to betto
+[33mfb93cb5[m[33m ([m[1;32mdiana[m[33m)[m HEAD@{2}: checkout: moving from betto to diana
+[33m87052c8[m[33m ([m[1;31morigin/betto[m[33m)[m HEAD@{3}: reset: moving to HEAD
+[33m87052c8[m[33m ([m[1;31morigin/betto[m[33m)[m HEAD@{4}: checkout: moving from diana to betto
+[33mfb93cb5[m[33m ([m[1;32mdiana[m[33m)[m HEAD@{5}: commit: adaugare lista puncte fav
+[33m4b6b29e[m HEAD@{6}: reset: moving to diana
+[33m4b6b29e[m HEAD@{7}: reset: moving to origin/diana
+[33m75c2536[m[33m ([m[1;31morigin/schelet[m[33m, [m[1;31morigin/main[m[33m, [m[1;32mschelet[m[33m, [m[1;32mmain[m[33m)[m HEAD@{8}: reset: moving to diana
+[33m75c2536[m[33m ([m[1;31morigin/schelet[m[33m, [m[1;31morigin/main[m[33m, [m[1;32mschelet[m[33m, [m[1;32mmain[m[33m)[m HEAD@{9}: reset: moving to origin/main
+[33m75c2536[m[33m ([m[1;31morigin/schelet[m[33m, [m[1;31morigin/main[m[33m, [m[1;32mschelet[m[33m, [m[1;32mmain[m[33m)[m HEAD@{10}: reset: moving to origin/main
+[33m4b6b29e[m HEAD@{11}: pull origin diana: Fast-forward
+[33m109081e[m[33m ([m[1;32mstefania[m[33m)[m HEAD@{12}: checkout: moving from stefania to diana
+[33m109081e[m[33m ([m[1;32mstefania[m[33m)[m HEAD@{13}: reset: moving to HEAD
+[33m109081e[m[33m ([m[1;32mstefania[m[33m)[m HEAD@{14}: reset: moving to stefania
+[33m109081e[m[33m ([m[1;32mstefania[m[33m)[m HEAD@{15}: reset: moving to stefania
+[33m109081e[m[33m ([m[1;32mstefania[m[33m)[m HEAD@{16}: checkout: moving from stefania to stefania
+[33m109081e[m[33m ([m[1;32mstefania[m[33m)[m HEAD@{17}: reset: moving to stefania
+[33m109081e[m[33m ([m[1;32mstefania[m[33m)[m HEAD@{18}: checkout: moving from diana to stefania
+[33m109081e[m[33m ([m[1;32mstefania[m[33m)[m HEAD@{19}: commit: Adaugare layer Manastiri
+[33m53c00ab[m HEAD@{20}: pull origin diana: Merge made by the 'ort' strategy.
+[33m1e3ebee[m HEAD@{21}: reset: moving to HEAD
+[33m1e3ebee[m HEAD@{22}: commit: Adaugare layer Manastiri
+[33m2a98bc5[m HEAD@{23}: pull origin diana: Fast-forward
+[33m3b44020[m HEAD@{24}: checkout: moving from betto to diana
+[33m87052c8[m[33m ([m[1;31morigin/betto[m[33m)[m HEAD@{25}: commit: Cod modularizat
+[33m75c2536[m[33m ([m[1;31morigin/schelet[m[33m, [m[1;31morigin/main[m[33m, [m[1;32mschelet[m[33m, [m[1;32mmain[m[33m)[m HEAD@{26}: checkout: moving from main to betto
+[33m75c2536[m[33m ([m[1;31morigin/schelet[m[33m, [m[1;31morigin/main[m[33m, [m[1;32mschelet[m[33m, [m[1;32mmain[m[33m)[m HEAD@{27}: reset: moving to schelet
+[33m75c2536[m[33m ([m[1;31morigin/schelet[m[33m, [m[1;31morigin/main[m[33m, [m[1;32mschelet[m[33m, [m[1;32mmain[m[33m)[m HEAD@{28}: checkout: moving from schelet to main
+[33m75c2536[m[33m ([m[1;31morigin/schelet[m[33m, [m[1;31morigin/main[m[33m, [m[1;32mschelet[m[33m, [m[1;32mmain[m[33m)[m HEAD@{29}: commit: Schelet modularizat
+[33m77e5051[m HEAD@{30}: commit: Structura de baza
+[33m129118e[m HEAD@{31}: Branch: renamed refs/heads/master to refs/heads/schelet
+[33m129118e[m HEAD@{33}: commit: Structura de baza
+[33m7c13875[m HEAD@{34}: commit (initial): Initial commit from Create Next App
