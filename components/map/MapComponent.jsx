@@ -12,12 +12,15 @@ import Graphic from "@arcgis/core/Graphic.js";
 import "../../styles/map.css";
 import SelectedPointsList from "./SelectedPointsList";
 
-const MapComponent = ({ selectedLayer }) => {
+
+const MapComponent = ({ selectedLayer, onSaveRoute }) => {
     const mapRef = useRef(null);  // Referință la containerul DOM al hărții
     const viewRef = useRef(null); // Referință la obiectul `MapView`
     const [selectedPoints, setSelectedPoints] = useState([]);
     const [isMapBlocked, setIsMapBlocked] = useState(true); // Harta blocată inițial
     const [instruction, setInstruction] = useState("Vă rugăm să selectați o tema pentru vacanța!");
+    const [selectedRegion, setSelectedRegion] = useState(""); // Pentru regiune
+    const [themeTitle, setThemeTitle] = useState(""); // Pentru tematica
 
     useEffect(() => {
         setSelectedPoints([]);
@@ -86,7 +89,7 @@ const MapComponent = ({ selectedLayer }) => {
                 type: "simple",
                 symbol: {
                     type: "simple-fill",
-                    color: [0, 255, 0, 0.2],
+                    color: [0, 255, 0, 0.1],
                     outline: { color: [0, 100, 0], width: 1 },
                 },
             },
@@ -111,6 +114,7 @@ const MapComponent = ({ selectedLayer }) => {
             url: selectedLayer.url,
             renderer: selectedLayer.renderer,
             outFields: ["*"],
+            title: selectedLayer.name || "Layer fără titlu", // Folosește `name` în loc de `title`
         });
 
         thematicLayer.when(() => {
@@ -174,6 +178,8 @@ const MapComponent = ({ selectedLayer }) => {
             return;
         }
 
+        setSelectedRegion(regionName); // Setează regiunea selectată
+        setThemeTitle(thematicLayer.title); // Setează tematica din `selectedLayer`
         console.log(`Selected region: ${regionName}. Selected theme: ${thematicLayer.title}`);
 
         const regionLayer = map.layers.find((layer) => layer.title === "regiuni_romania");
@@ -302,11 +308,9 @@ const MapComponent = ({ selectedLayer }) => {
             }
 
             return updatedPoints;
-    });
-};
-
+        });
+    };
       
-
     return (
         <div className="map-page-container">
             <div className="map-content-container">
@@ -325,7 +329,15 @@ const MapComponent = ({ selectedLayer }) => {
                     onCalculateRoute={calculateRoute}
                     onRemovePoint={removePoint}
                 />
+                <button
+                className="save-button"
+                disabled={selectedPoints.length < 2}
+                onClick={() => onSaveRoute(selectedPoints, selectedRegion, themeTitle)} // Folosim funcție anonimă pentru a pasa funcția corect
+                >
+                Salveaza Traseul
+            </button>
             </div>
+            
         </div>
     );
 };

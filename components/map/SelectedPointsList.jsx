@@ -40,7 +40,7 @@ const SelectedPointsList = ({ selectedPoints, onReset, onCalculateRoute, onRemov
             Resetează Lista
             </button>
             <button
-            className="route-button"
+            className="compute-button"
             onClick={onCalculateRoute}
             disabled={selectedPoints.length < 2}
             >
