@@ -170,11 +170,11 @@ const MapComponent = ({ selectedLayer }) => {
     const handleRegionSelection = async (regionName, regionGeometry, map) => {
         const thematicLayer = map.layers.find((layer) => layer.title !== "regiuni_romania");
         if (!thematicLayer) {
-            alert(`Intai selecteaza o tematica!`);
+            alert(`Va rugam selectati o tema!`);
             return;
         }
 
-        alert(`Ai selectat regiunea: ${regionName} si tematica: ${thematicLayer.title}`);
+        console.log(`Selected region: ${regionName}. Selected theme: ${thematicLayer.title}`);
 
         const regionLayer = map.layers.find((layer) => layer.title === "regiuni_romania");
         if (regionLayer) {
@@ -207,15 +207,18 @@ const MapComponent = ({ selectedLayer }) => {
         }
     };
 
-    const calculateRoute = async () => {
-        if (selectedPoints.length < 2) {
-            alert("Trebuie să selectați cel puțin două puncte pentru a calcula o rută.");
+    const calculateRoute = async (points) => {
+        resetRoute();
+        const routePoints = Array.isArray(points) ? points : selectedPoints;  // Folosește `selectedPoints` dacă `points` este `undefined`
+
+        if (!Array.isArray(routePoints) || routePoints.length < 2) {
+            alert("Trebuie să selectați cel puțin două obiective pentru a calcula o rută.");
             return;
         }
-    
-        console.log("Puncte selectate:", selectedPoints); // Afișează lista de puncte selectate în consolă
 
-        const stops = selectedPoints
+        console.log("Puncte selectate:", routePoints); // Afișează lista de puncte selectate în consolă
+
+        const stops = routePoints
         .map((point) => {
             // Folosim direct latitude și longitude dacă există
             const { latitude, longitude } = point.geometry;
@@ -231,7 +234,7 @@ const MapComponent = ({ selectedLayer }) => {
         const apiKey = esriConfig.apiKey;
         const routeUrl = `https://route.arcgis.com/arcgis/rest/services/World/Route/NAServer/Route_World/solve`;
 
-        console.log("Puncte pentru rutare (WGS 84):", stops)
+        console.log("Extracted stops from list.")
     
         const params = new URLSearchParams({
             stops,
@@ -245,14 +248,12 @@ const MapComponent = ({ selectedLayer }) => {
             });
             const data = await response.json();
 
-            alert("Ruta a fost calculata!");
-            console.log("Răspuns rută:", data.routes);
-            
+            console.log("Route calculated.");
     
             if (data.routes && data.routes.features.length > 0) {
             const routeGeometry = data.routes.features[0].geometry;
 
-            console.log("Geometria rutei:", routeGeometry);
+            console.log("Route Geometry created.");
 
             // Creează un obiect `Graphic` pentru a afișa ruta pe hartă
             const routeGraphic = new Graphic({
@@ -268,14 +269,12 @@ const MapComponent = ({ selectedLayer }) => {
                 },
             });
 
-            console.log("Route Graphic created.", routeGeometry);
-            //return;
+            console.log("Route Graphic created.");
 
-            // Afișează ruta pe hartă
-            // Folosește `viewRef.current` pentru a accesa `graphics`
+            // Afișează ruta pe hartă folosind `viewRef.current` pentru a accesa `graphics`
             viewRef.current.graphics.add(routeGraphic);
-            
-            alert("Ruta a fost afișată pe hartă.");
+
+            console.log("Ruta a fost afișată pe hartă.");
 
         } else {
             alert("Nu s-a putut calcula ruta.");
@@ -286,6 +285,27 @@ const MapComponent = ({ selectedLayer }) => {
         }
     };
     
+    const resetRoute = () => {
+        if (viewRef.current) {
+          viewRef.current.graphics.removeAll();  // Elimină toate graficele (inclusiv ruta)
+        }
+    };
+
+    const removePoint = (index) => {
+        setSelectedPoints((prevPoints) => {
+            const updatedPoints = prevPoints.filter((_, i) => i !== index);
+            resetRoute(); // Șterge ruta veche
+
+            // Dacă rămân cel puțin două puncte, recalculăm ruta imediat
+            if (updatedPoints.length >= 2) {
+                calculateRoute(updatedPoints); // Trimite lista actualizată
+            }
+
+            return updatedPoints;
+    });
+};
+
+      
 
     return (
         <div className="map-page-container">
@@ -296,15 +316,15 @@ const MapComponent = ({ selectedLayer }) => {
                     </div>
                 )}
                 <div ref={mapRef} className="map-container" />
-                <SelectedPointsList selectedPoints={selectedPoints} onReset={() => setSelectedPoints([])} />
-                <button 
-                    className="calculate-route-btn" 
-                    onClick={calculateRoute} 
-                    disabled={selectedPoints.length < 2}
-                >
-                    Calculează Ruta
-                </button>
-
+                <SelectedPointsList
+                    selectedPoints={selectedPoints}
+                    onReset={() => {
+                        setSelectedPoints([]);
+                        resetRoute();
+                    }}
+                    onCalculateRoute={calculateRoute}
+                    onRemovePoint={removePoint}
+                />
             </div>
         </div>
     );

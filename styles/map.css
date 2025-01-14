@@ -4,7 +4,7 @@
   flex-direction: column;
   width: 100%;
   height: 100vh;
-  padding: 20px;
+  padding: 40px;
 }
 
 /* Container pentru hartă și listă */
@@ -20,7 +20,7 @@
 .map-container {
   flex: 2;
   height: 100%;
-  border-radius: 8px;
+  border-radius: 4px;
   overflow: hidden;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   position: relative; /* Asigură că overlay-ul va fi în interiorul acestei zone */
@@ -44,4 +44,84 @@
     font-size: 1.5rem;
     font-weight: bold;
     text-align: center;
+}
+
+/* Container pentru lista de puncte */
+.list-container {
+    flex: 1;
+    height: 100%;
+    width: 100%;
+    max-width: 400px;
+    max-height: 650px;
+    background-color: var(--color-white2);
+    border-radius: 0px;
+    padding: 10px;
+    overflow-y: auto;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+}
+  
+/* Titlul listei */
+.list-container h4 {
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: #333333;
+}
+
+/* Elemente din listă */
+.list-container ul {
+    list-style-type: 3;
+    font-size: 14px;
+}
+
+.list-item {
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.list-container a {
+    color: var(--color-darkblue1);
+    text-decoration: none;
+}
+
+.list-container a:hover {
+    text-decoration: underline;
+}
+
+.buttons-container {
+    background-color: var(--color-white2);
+    border-radius: 0px;
+    padding: 10px;
+}
+/* Butoane */
+.reset-button,
+.route-button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    width: 100%;
+    max-width: 250px;
+    height: 100%;
+    max-height: 40px;
+    background-color: var(--color-darkblue1);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    overflow-y: auto;
+}
+
+.reset-button:hover,
+.route-button:hover {
+    background-color: var(--color-darkblue2);
+    text-decoration: none;
+}
+
+.delete-point-button {
+    background-color: var(--color-white2);
+    color: var(--color-darkblue1);
+    font-size: 14px;
+}
+
+.delete-point-button:hover {
+    text-decoration: underline;
 }
