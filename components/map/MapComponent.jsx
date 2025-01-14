@@ -13,7 +13,8 @@ import "../../styles/map.css";
 import SelectedPointsList from "./SelectedPointsList";
 
 const MapComponent = ({ selectedLayer }) => {
-    const mapRef = useRef(null);
+    const mapRef = useRef(null);  // Referință la containerul DOM al hărții
+    const viewRef = useRef(null); // Referință la obiectul `MapView`
     const [selectedPoints, setSelectedPoints] = useState([]);
     const [isMapBlocked, setIsMapBlocked] = useState(true); // Harta blocată inițial
     const [instruction, setInstruction] = useState("Vă rugăm să selectați o tema pentru vacanța!");
@@ -27,7 +28,8 @@ const MapComponent = ({ selectedLayer }) => {
             try {
                 const map = createMap();
                 const view = createMapView(map);
-
+                viewRef.current = view; // Stochează `view` în `viewRef`
+                
                 const regionLayer = createRegionLayer(map);
                 map.add(regionLayer);
 
@@ -212,21 +214,73 @@ const MapComponent = ({ selectedLayer }) => {
         }
     
         console.log("Puncte selectate:", selectedPoints); // Afișează lista de puncte selectate în consolă
-        // return;
-        const stops = selectedPoints.map((point) => `${point.geometry.x},${point.geometry.y}`).join(";");
+
+        const stops = selectedPoints
+        .map((point) => {
+            // Folosim direct latitude și longitude dacă există
+            const { latitude, longitude } = point.geometry;
+            if (latitude && longitude) {
+                return `${longitude},${latitude}`;
+            } else {
+                console.error("Punctul nu conține latitude/longitude:", point);
+                throw new Error("Punct invalid. Nu are coordonate corecte.");
+            }
+        })
+        .join(";");
+
         const apiKey = esriConfig.apiKey;
         const routeUrl = `https://route.arcgis.com/arcgis/rest/services/World/Route/NAServer/Route_World/solve`;
 
-        console.log("Ruta:", stops); // Afișează lista de puncte selectate în consolă
+        console.log("Puncte pentru rutare (WGS 84):", stops)
+    
+        const params = new URLSearchParams({
+            stops,
+            f: "json",
+            token: apiKey,
+        });
     
         try {
-            const response = await fetch(`${routeUrl}?stops=${stops}&f=json&token=${apiKey}`);
+            const response = await fetch(`${routeUrl}?${params.toString()}`, {
+                method: "GET",
+            });
             const data = await response.json();
-            if (data.routes) {
-                alert("Ruta a fost calculată cu succes!");
-            } else {
-                alert("Nu s-a putut calcula ruta.");
-            }
+
+            alert("Ruta a fost calculata!");
+            console.log("Răspuns rută:", data.routes);
+            
+    
+            if (data.routes && data.routes.features.length > 0) {
+            const routeGeometry = data.routes.features[0].geometry;
+
+            console.log("Geometria rutei:", routeGeometry);
+
+            // Creează un obiect `Graphic` pentru a afișa ruta pe hartă
+            const routeGraphic = new Graphic({
+                geometry: {
+                    type: "polyline",
+                    paths: routeGeometry.paths, // Folosește câmpul `paths` din răspuns
+                    spatialReference: { wkid: 4326 },
+                },
+                symbol: {
+                    type: "simple-line",
+                    color: [0, 0, 255, 0.8], // Albastru semi-transparent
+                    width: 4, // Grosimea liniei
+                },
+            });
+
+            console.log("Route Graphic created.", routeGeometry);
+            //return;
+
+            // Afișează ruta pe hartă
+            // Folosește `viewRef.current` pentru a accesa `graphics`
+            viewRef.current.graphics.add(routeGraphic);
+            
+            alert("Ruta a fost afișată pe hartă.");
+
+        } else {
+            alert("Nu s-a putut calcula ruta.");
+            return;
+        }
         } catch (error) {
             console.error("Eroare la calcularea rutei:", error);
         }
