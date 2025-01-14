@@ -24,3 +24,30 @@ export const manastiriRenderer = {
     size: "8px",
   },
 };
+
+export const atractiiRenderer = {
+  type: "simple",
+  symbol: {
+    type: "simple-marker",
+    color: "black",
+    size: "8px",
+  },
+};
+
+export const cladiriRenderer = {
+  type: "simple",
+  symbol: {
+    type: "simple-marker",
+    color: "orange",
+    size: "8px",
+  },
+};
+
+export const shoppingRenderer = {
+  type: "simple",
+  symbol: {
+    type: "simple-marker",
+    color: "purple",
+    size: "8px",
+  },
+};

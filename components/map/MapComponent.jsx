@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import esriConfig from "@arcgis/core/config.js";
 import Map from "@arcgis/core/Map.js";
 import MapView from "@arcgis/core/views/MapView.js";
@@ -8,12 +8,16 @@ import FeatureLayer from "@arcgis/core/layers/FeatureLayer.js";
 import GeoJSONLayer from "@arcgis/core/layers/GeoJSONLayer.js";
 import Query from "@arcgis/core/rest/support/Query.js"; // Pentru interogări
 
+import "../../styles/map.css";
+import SelectedPointsList from "./SelectedPointsList";
 
 
 const MapComponent = ({ selectedLayer }) => {
   const mapRef = useRef(null);
+  const [selectedPoints, setSelectedPoints] = useState([]);
 
   useEffect(() => {
+    setSelectedPoints([]);
     // Configurare API Key
     esriConfig.apiKey =
       "AAPTxy8BH1VEsoebNVZXo8HurA68jFcPXz-dC0bjRMxYCtOcFXikjbCIslC1pYzC4PnuBx9o1IKmNwKh6jhMI_gDo3fEzuUQOlsOfPNou5BEHTfW4wPvKgNaXtY4JTU0BndU-7d0K_l77KD2QxGVRl8NxYvv8kcmvQtXbw8amy8q1Ydvl2gk5iXNxO_h_JNid9t6CINTjtjsHvkxXsc_VoajW5fRhH9kX6zN9V0644k1Ydxq88_UX5X-Af7f6SW86alWAT1_AaAKiXG1";
@@ -33,8 +37,15 @@ const MapComponent = ({ selectedLayer }) => {
         const view = new MapView({
           container: mapRef.current,
           map: map,
-          center: [25.276987, 45.943161], // Centrul României
-          zoom: 6, // Nivelul de zoom inițial
+          center: [25.276987, 45.943161],
+          zoom: 6,
+          popup: {
+            dockEnabled: false,
+            dockOptions: {
+              buttonEnabled: true,
+              breakpoint: false,
+            },
+          },
         });
 
         console.log("Vizualizarea hărții a fost creată:", view);
@@ -86,12 +97,12 @@ const MapComponent = ({ selectedLayer }) => {
         if (selectedLayer?.url) {
           console.log("Încerc să adaug layer-ul:", selectedLayer);
 
-          const thematicLayer  = new FeatureLayer({
+          const thematicLayer = new FeatureLayer({
             url: selectedLayer.url,
             renderer: selectedLayer.renderer,
+            outFields: ["*"]
           });
 
-          // Verifică dacă layer-ul este valid
           thematicLayer.when(() => {
             console.log("Layer încărcat cu succes:", thematicLayer);
           }).catch((error) => {
@@ -99,6 +110,40 @@ const MapComponent = ({ selectedLayer }) => {
           });
 
           map.add(thematicLayer);
+
+          // Detectare click pe layerul tematic pentru popup
+          view.on("click", async (event) => {
+            const response = await view.hitTest(event);
+
+            const graphic = response.results.find(
+              (res) => res.graphic?.layer?.id === thematicLayer.id
+            )?.graphic;
+            
+            if (graphic && graphic.attributes) {
+              const newPoint = {
+                id: graphic.attributes.OBJECTID || graphic.attributes.id || Date.now(),  // Asigură un ID unic
+                name: graphic.attributes.name || "Fără titlu",
+                address: graphic.attributes.formatted_address || "Adresă necunoscută",
+                rating: graphic.attributes.rating || "N/A",
+                url: graphic.attributes.url || "#"
+              };
+            
+              // Verificare pentru a evita dublarea punctelor
+              setSelectedPoints((prevPoints) => {
+                const isDuplicate = prevPoints.some(point => point.id === newPoint.id);
+                if (!isDuplicate) {
+                  const updatedPoints = [...prevPoints, newPoint];
+                  console.log("Lista actualizată:", updatedPoints);
+                  return updatedPoints;
+                } else {
+                  console.log("Punctul există deja în listă.");
+                  return prevPoints;
+                }
+              });
+            } else {
+              console.log("Niciun punct detectat.");
+            }
+          });
         }
 
         // Detectare click pe regiune
@@ -114,6 +159,7 @@ const MapComponent = ({ selectedLayer }) => {
                 console.log("Nu ai selectat o regiune.");
               }
           });
+          
 
       } catch (error) {
         console.error("Eroare la inițializarea hărții:", error);
@@ -134,7 +180,20 @@ const MapComponent = ({ selectedLayer }) => {
     };
   }, [selectedLayer]);
 
-  return <div ref={mapRef} style={{ width: "100%", height: "100%" }} />;
+  return (
+    <div className="map-page-container">
+      <div className="map-content-container">
+        {/* 🗺️ Harta */}
+        <div ref={mapRef} className="map-container" />
+
+        {/* 📋 Lista de puncte */}
+        <SelectedPointsList
+          selectedPoints={selectedPoints}
+          onReset={() => setSelectedPoints([])}
+        />
+      </div>
+    </div>
+  );
 };
 
 
