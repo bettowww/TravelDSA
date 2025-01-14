@@ -13,7 +13,7 @@ import "../../styles/map.css";
 import SelectedPointsList from "./SelectedPointsList";
 
 
-const MapComponent = ({ selectedLayer, onSaveRoute }) => {
+const MapComponent = ({ selectedLayer, onSaveRoute, initialRoute}) => {
     const mapRef = useRef(null);  // Referință la containerul DOM al hărții
     const viewRef = useRef(null); // Referință la obiectul `MapView`
     const [selectedPoints, setSelectedPoints] = useState([]);
@@ -61,6 +61,26 @@ const MapComponent = ({ selectedLayer, onSaveRoute }) => {
             }
         };
     }, [selectedLayer]);
+
+    // Effect pentru afisarea initialRoute
+    useEffect(() => {
+        if (initialRoute && initialRoute.points.length > 0) {
+            console.log("Displaying initial route:", initialRoute);
+            console.log("Tema si regiune: ", initialRoute.region, initialRoute.theme);
+    
+            // Setează regiunea și tematica
+            setSelectedRegion(initialRoute.region);
+            setThemeTitle(initialRoute.theme);
+    
+            // Deblochează harta și ascunde overlay-ul
+            setIsMapBlocked(false);
+            setInstruction("");
+    
+            // Afișează ruta fără a trece prin flow-ul complet
+            calculateRoute(initialRoute.points);
+            setSelectedPoints(initialRoute.points);
+        }
+    }, [initialRoute]);
 
     const createMap = () => {
         return new Map({
@@ -329,13 +349,23 @@ const MapComponent = ({ selectedLayer, onSaveRoute }) => {
                     onCalculateRoute={calculateRoute}
                     onRemovePoint={removePoint}
                 />
+                {initialRoute ? (
+                <div className="route-info-box">
+                    <h3>Detalii Rută</h3>
+                    <p><strong>Nume rută:</strong> {initialRoute.name}</p>
+                    <p><strong>Tematică:</strong> {themeTitle}</p>
+                    <p><strong>Regiune:</strong> {selectedRegion}</p>
+                    <p><strong>Număr puncte:</strong> {initialRoute.points.length}</p>
+                </div>
+            ) : (
                 <button
-                className="save-button"
-                disabled={selectedPoints.length < 2}
-                onClick={() => onSaveRoute(selectedPoints, selectedRegion, themeTitle)} // Folosim funcție anonimă pentru a pasa funcția corect
+                    className="save-route-button"
+                    disabled={selectedPoints.length < 2}
+                    onClick={() => onSaveRoute(selectedPoints, selectedRegion, themeTitle)} // Folosim funcție anonimă pentru a pasa funcția corect
                 >
-                Salveaza Traseul
-            </button>
+                    Salvează Traseul
+                </button>
+            )}
             </div>
             
         </div>

@@ -20,6 +20,11 @@ const MapComponent = dynamic(() => import("../../components/map/MapComponent"), 
 
 const MapPage = () => {
   const { selectedLayer, setSelectedLayer, layers } = useLayers();
+  const searchParams = useSearchParams();
+
+  const routeParam = searchParams.get("route");
+  const initialRoute = routeParam ? JSON.parse(decodeURIComponent(routeParam)) : null;
+  console.log(`initial route found ${initialRoute}`)
 
   const handleSaveRoute = async (selectedPoints, selectedRegion, themeTitle) => {
     if (!Array.isArray(selectedPoints) || selectedPoints.length < 2) {
@@ -38,13 +43,17 @@ const MapPage = () => {
         const routesRef = ref(db, `user_routes/${userId}`);
         const newRouteRef = push(routesRef);
 
-        const routeName = `Traseu Tematic ${themeTitle || "General"} - ${selectedRegion || "Necunoscut"}`;
+        const routeName = `Vacanta in ${selectedRegion || "Necunoscut"} cu tematica ${themeTitle || "General"}`;
         const routeData = {
             name: routeName,
+            region: selectedRegion || "Necunoscut",  // Adaugă regiunea
+            theme: themeTitle || "General",  // Adaugă tematica
             points: selectedPoints.map((point) => ({
                 name: point.name,
-                latitude: point.geometry.latitude,
-                longitude: point.geometry.longitude,
+                geometry: {
+                    latitude: point.geometry.latitude,
+                    longitude: point.geometry.longitude,
+                  },
             })),
             created_at: new Date().toISOString(),
         };
@@ -74,6 +83,7 @@ const MapPage = () => {
         <MapComponent
             selectedLayer={selectedLayer}
             onSaveRoute={handleSaveRoute} // Transmiți funcția ca referință, fără să o apelezi
+            initialRoute={initialRoute} // Transmitem ruta inițială către MapComponent
         />
       </div>
     </div>
