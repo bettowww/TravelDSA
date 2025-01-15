@@ -50,20 +50,6 @@ const SavedRoutesPage = () => {
         fetchSavedRoutes();
     }, []);
 
-    const handleShare = (routeId) => {
-        // Placeholder pentru URL-ul de partajare (poți genera un URL real aici)
-        const link = `https://example.com/routes/${routeId}`;
-        navigator.clipboard.writeText(link)
-            .then(() => {
-                setSuccessMessage("Link copied to clipboard!");
-                setTimeout(() => setSuccessMessage(""), 2000);
-            })
-            .catch((error) => {
-                console.error("Failed to copy the link:", error);
-                alert("An error occurred while copying the link.");
-            });
-    };
-
     const handleDelete = async (routeId) => {
         try {
             const userId = auth.currentUser?.uid;
@@ -114,19 +100,13 @@ const SavedRoutesPage = () => {
                                 <button
                                     onClick={() => handleViewOnMap(route)}
                                 >
-                                    View on Map
-                                </button>
-                                <button
-                                    className="share-button"
-                                    onClick={() => handleShare(route.id)}
-                                >
-                                    Share
+                                    View on Map & Share
                                 </button>
                                 <button
                                     className="delete-button"
                                     onClick={() => handleDelete(route.id)}
                                 >
-                                    Delete
+                                    Delete Route
                                 </button>
                             </div>
                         </li>

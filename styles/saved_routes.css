@@ -63,8 +63,7 @@
 }
 
 
-.route-card button,
-.share-button {
+.route-card button {
     background-color: var(--color-darkblue1);
     color: #fff;
     border: none;
@@ -75,8 +74,7 @@
     max-width: 250px;
 }
 
-.route-card button:hover,
-.share-button:hover {
+.route-card button:hover {
     background-color: var(--color-darkblue2);
 }
 

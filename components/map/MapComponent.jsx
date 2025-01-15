@@ -82,6 +82,19 @@ const MapComponent = ({ selectedLayer, onSaveRoute, initialRoute}) => {
         }
     }, [initialRoute]);
 
+    const handleShare = () => {
+        const currentUrl = window.location.href; // URL-ul complet al paginii curente
+    
+        navigator.clipboard.writeText(currentUrl)
+            .then(() => {
+                alert("Link copiat cu succes!");
+            })
+            .catch((error) => {
+                console.error("Eroare la copierea linkului:", error);
+                alert("A apărut o problemă la copierea linkului.");
+            });
+    };
+
     const createMap = () => {
         return new Map({
             basemap: "streets-vector",
@@ -356,6 +369,12 @@ const MapComponent = ({ selectedLayer, onSaveRoute, initialRoute}) => {
                     <p><strong>Tematică:</strong> {themeTitle}</p>
                     <p><strong>Regiune:</strong> {selectedRegion}</p>
                     <p><strong>Număr puncte:</strong> {initialRoute.points.length}</p>
+                    <button
+                        className="share-button"
+                        onClick={() => handleShare()}
+                    >
+                        Share
+                    </button>
                 </div>
             ) : (
                 <button
