@@ -18,7 +18,8 @@ const RootLayout = ({ children }) => {
   };
 
   const handleMapClick = () => {
-    router.push("/map");
+    // router.push("/map");
+    window.location.href = "/map";
   };
 
   return (
